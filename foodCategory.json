@@ -1,11 +1,64 @@
 [
-    {
-        "CategoryName": "Biryani/Rice"
-    },
-    {
-        "CategoryName": "Starter"
-    },
-    {
-        "CategoryName": "Pizza"
-    }
+  {
+    "CategoryName": "Starter",
+    "Sticker": "🍲"
+  },
+  {
+    "CategoryName": "Main Course",
+    "Sticker": "🍽️"
+  },
+  {
+    "CategoryName": "Snacks",
+    "Sticker": "🍟"
+  },
+  {
+    "CategoryName": "Soups",
+    "Sticker": "🍜"
+  },
+  {
+    "CategoryName": "Salads",
+    "Sticker": "🥗"
+  },
+  {
+    "CategoryName": "Biryani/Rice",
+    "Sticker": "🍛"
+  },
+  
+  {
+    "CategoryName": "Pizza",
+    "Sticker": "🍕"
+  },
+  {
+    "CategoryName": "Desserts",
+    "Sticker": "🍰"
+  },
+  {
+    "CategoryName": "Beverages",
+    "Sticker": "🥤"
+  },
+  {
+    "CategoryName": "Salads",
+    "Sticker": "🥗"
+  },
+  {
+    "CategoryName": "Biryani/Rice",
+    "Sticker": "🍛"
+  },
+  
+  {
+    "CategoryName": "Pizza",
+    "Sticker": "🍕"
+  },
+  {
+    "CategoryName": "Desserts",
+    "Sticker": "🍰"
+  },
+  {
+    "CategoryName": "Beverages",
+    "Sticker": "🥤"
+  },
+  {
+    "CategoryName": "Salads",
+    "Sticker": "🥗"
+  }
 ]

@@ -7,6 +7,7 @@
   pointer-events: none;
 }
 
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -38,9 +39,9 @@
 }
 
 .carousel-img {
-  height: 400px;
+  height: 500px;
   object-fit: cover;
-  filter: brightness(30%);
+  filter: brightness(34%);
 }
 .carousel-caption {
   position: absolute;
@@ -49,9 +50,9 @@
   transform: translate(-50%, -50%);
   color: white;
 }
-.form-control{
-  justify-items: center;
-  width: 60%;
+
+.form-control {
+  width: 100%;
   height: 40px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -63,7 +64,23 @@
   margin-bottom: 33px;
 }
 
-
-.navbar_{
+/* .navbar_{
   background-color: #14213D;
+} */
+
+.search-div {
+  width: 100%;
 }
+.search-box {
+  background-color: #f7f2ff;
+}
+.number {
+  font-size: 15px;
+  margin-top: -1px;
+}
+.quantity {
+  font-size: 15px;
+}
+
+/* sample
+} */

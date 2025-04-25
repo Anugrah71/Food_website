@@ -69,9 +69,7 @@ export default function Signup() {
               value={credentials.email}
               onChange={onChange}
             />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
+        
           </div>
 
           <div className="mb-3">
@@ -108,7 +106,7 @@ export default function Signup() {
             Submit
           </button>
 
-          <Link to="/login" className="btn btn-outline-danger w-100">
+          <Link to="/login" className="btn btn-danger w-100 mb-2">
             Already a User?
           </Link>
         </form>

@@ -6,7 +6,7 @@ router.post("/orderData", async (req, res) => {
   try {
     console.log("Request body>>>>>>>>>>>>>>>>>>>>:", req.body);
     let data = req.body.order_data;
-    console.log("Data>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>:", data);
+
     
    
     await data.splice(0, 0, { Order_date: req.body.order_date });
