@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navebar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
-import "../App.css";
+import "../styles/Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Category from "../components/Category";
@@ -32,7 +32,6 @@ export default function Home() {
 
   const handleCategorySelect = (CategoryName) => {
     setSelectedCategory(CategoryName);
-    console.log(">>>>>>>>>>>>ss", CategoryName);
   };
 
   return (
@@ -47,8 +46,8 @@ export default function Home() {
       >
         <div className="carousel-inner">
           <div
-            className=" position-absolute bottom-0 start-0 w-100 d-flex justify-content-center"
-            style={{ zIndex: 10, padding: "1rem" }}
+            className="form-div position-absolute bottom-0 start-0 w-100 d-flex justify-content-center"
+            
           >
             <form className=" w-100 px-5">
               <input
@@ -122,40 +121,77 @@ export default function Home() {
 
       {/* Food Cards Section */}
       <div className="m-3 container">
-        {foodCat.length > 0 &&
-          foodCat.map((data) => (
-            <div key={data._id}>
-              <div className="fs-3 m-3">{data.CategoryName}</div>
-              <hr />
-              {foodItems.length > 0 ? (
-                <div className="row">
-                  {foodItems
-                    .filter(
-                      (item) =>
-                        (!selectedCategory ||
-                          item.CategoryName.toLowerCase() ===
-                            selectedCategory.toLowerCase()) &&
-                        item.CategoryName === data.CategoryName &&
-                        item.name.toLowerCase().includes(search.toLowerCase())
-                    )
-                    .map((filteredItem) => (
-                      <div
-                        key={filteredItem._id}
-                        className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ml-2 d-flex justify-content-center"
-                      >
-                        <Card
-                          foodItems={filteredItem}
-                          options={filteredItem.options}
-                        />
-                      </div>
-                    ))}
+  {/* Only display the selected category */}
+  {selectedCategory && (
+    <div>
+      <div className="fs-3 m-3">{selectedCategory}</div>
+      <hr />
+      {/* Filter items for the selected category */}
+      {foodItems.length > 0 ? (
+        <div className="row">
+          {foodItems
+            .filter((item) => {
+              // Filter by selected category and search term
+              return (
+                item.CategoryName.toLowerCase() === selectedCategory.toLowerCase() &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+              );
+            })
+            .map((filteredItem) => (
+              <div
+                key={filteredItem._id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ml-2 d-flex justify-content-center"
+              >
+                <Card
+                  foodItems={filteredItem}
+                  options={filteredItem.options}
+                />
+              </div>
+            ))}
+        </div>
+      ) : (
+        <div>No items found in this category</div>
+      )}
+    </div>
+  )}
+
+  {/* If no category is selected, show all items grouped by category */}
+  {!selectedCategory &&
+    foodCat.length > 0 &&
+    foodCat.map((data) => {
+      const filteredItems = foodItems.filter((item) => {
+        return (
+          item.CategoryName.toLowerCase() === data.CategoryName.toLowerCase() &&
+          item.name.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      if (filteredItems.length === 0) return null;
+      return (
+        <div key={data._id}>
+          <div className="fs-3 m-3">{data.CategoryName}</div>
+          <hr />
+          {filteredItems.length > 0 ? (
+            <div className="row">
+              {filteredItems.map((filteredItem) => (
+                <div
+                  key={filteredItem._id}
+                  className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ml-2 d-flex justify-content-center"
+                >
+                  <Card
+                    foodItems={filteredItem}
+                    options={filteredItem.options}
+                  />
                 </div>
-              ) : (
-                <div>No data found</div>
-              )}
+              ))}
             </div>
-          ))}
-      </div>
+          ) : (
+            <div>No items found in this category</div>
+          )}
+        </div>
+      );
+    })}
+</div>
+
 
       <Footer />
     </div>

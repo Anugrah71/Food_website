@@ -146,3 +146,63 @@
         "description": "Made using Indian masalas and Basmati rice. Barbequed pieces of Paneer/Chicken/Mutton were added."
     }
 ]
+
+
+[
+    
+        {
+          "name": "Chilli Paneer",
+          "img": "",
+          "options": [
+            { "half": "120", "full": "200" }
+          ],
+          "description": ""
+        },
+        {
+          "name": "Paneer 65",
+          "img": "",
+          "options": [
+            { "half": "150", "full": "260" }
+          ],
+          "description": ""
+        },
+        {
+          "name": "Chicken Tikka",
+          "img": "",
+          "options": [
+            { "half": "170", "full": "300" }
+          ],
+          "description": ""
+        },
+        {
+          "name": "Paneer Tikka",
+          "img": "",
+          "options": [
+            { "half": "170", "full": "250" }
+          ],
+          "description": ""
+        },
+        
+            {
+              "name": "Chicken Cheese Pizza",
+              "img": "",
+              "options": [
+                { "regular": "120", "medium": "230", "large": "350" }
+              ],
+              "description": ""
+            },
+            {
+              "name": "Mix Veg Pizza",
+              "img": "",
+              "options": [
+                { "regular": "100", "medium": "200", "large": "300" }
+              ],
+              "description": ""
+            }
+          
+          
+      
+      
+
+
+]

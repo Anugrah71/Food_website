@@ -80,7 +80,7 @@ export default function Login() {
           </button>
 
           <Link to="/createuser" className="btn btn-danger w-100">
-            I'm a new user
+            Sign Up
           </Link>
         </form>
       </div>

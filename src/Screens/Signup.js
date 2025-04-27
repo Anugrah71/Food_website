@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 export default function Signup() {
   const [credentials, setcredentials] = useState({
@@ -8,7 +8,7 @@ export default function Signup() {
     password: "",
     geolocation: ""
   });
-
+  let Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:5000/api/createuser", {
@@ -29,6 +29,11 @@ export default function Signup() {
     if (!json.success) {
       alert("Enter valid credentials");
     }
+    else{
+      localStorage.setItem("authToken", json.authToken);
+      localStorage.setItem("userEmail", credentials.email);
+      Navigate("/");
+    }
   };
 
   const onChange = (event) => {
@@ -46,7 +51,7 @@ export default function Signup() {
             </label>
             <input
               type="text"
-              className="form-control"
+              className="form-control input"
               id="exampleInputUserName"
               placeholder="Enter your name"
               name='name'
@@ -107,7 +112,7 @@ export default function Signup() {
           </button>
 
           <Link to="/login" className="btn btn-danger w-100 mb-2">
-            Already a User?
+            Log In
           </Link>
         </form>
       </div>

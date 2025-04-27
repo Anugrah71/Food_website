@@ -3,110 +3,107 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 export default function MyOrder() {
-  const [orderData, setorderData] = useState({});
+  const [orderData, setOrderData] = useState({});
 
   const fetchMyOrder = async () => {
-    console.log(localStorage.getItem("userEmail"));
-    await fetch("http://localhost:5000/api/MyOrderData", {
-      // credentials: 'include',
-      // Origin:"http://localhost:3000/login",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: localStorage.getItem("userEmail"),
-      }),
-    }).then(async (res) => {
-      let response = await res.json();
-      await setorderData(response);
-    });
-
-    // await res.map((data)=>{
-    //    console.log(data)
-    // })
+    try {
+      const response = await fetch("http://localhost:5000/api/MyOrderData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: localStorage.getItem("userEmail"),
+        }),
+      });
+      const json = await response.json();
+      setOrderData(json);
+    } catch (error) {
+      console.error("Error fetching order data:", error);
+    }
   };
 
   useEffect(() => {
     fetchMyOrder();
   }, []);
+console.log("hh>>>>>>>>>>",orderData);
+return (
+  <div>
+    <Navbar />
 
-  return (
-    <div>
-      <div>
-        <Navbar />
-      </div>
+    {/* Add a wrapper with a minimum height */}
+    <div
+      className="container d-flex flex-column"
+      style={{ minHeight: "calc(100vh - 100px)" }} // Adjust for header/footer height
+    >
+      <div className="row flex-grow-1">
+        {orderData.orderData && orderData.orderData.order_data ? (
+          orderData.orderData.order_data
+            .slice(0)
+            .reverse()
+            .map((itemGroup, index) => (
+              <div key={index} className="mb-4">
+                {/* Display the Order Date */}
+                {itemGroup[0]?.Order_date && (
+                  <div className="m-auto mt-5 text-center">
+                    <h5>{itemGroup[0].Order_date}</h5>
+                    <hr />
+                  </div>
+                )}
 
-      <div className="container">
-        <div className="row">
-          {orderData !== {}
-            ? Array(orderData).map((data) => {
-                return data.orderData
-                  ? data.orderData.order_data
-                      .slice(0)
-                      .reverse()
-                      .map((item) => {
-                        return item.map((arrayData) => {
-                          return (
-                            <div>
-                              {arrayData.Order_date ? (
-                                <div className="m-auto mt-5">
-                                  {(data = arrayData.Order_date)}
-                                  <hr />
-                                </div>
-                              ) : (
-                                <div className="col-12 col-md-6 col-lg-3">
-                                  <div
-                                    className="card mt-3"
-                                    style={{
-                                      width: "16rem",
-                                      maxHeight: "360px",
-                                    }}
-                                  >
-                                    <img
-                                      src={arrayData.img}
-                                      className="card-img-top"
-                                      alt="..."
-                                      style={{
-                                        height: "120px",
-                                        objectFit: "fill",
-                                      }}
-                                    />
-                                    <div className="card-body">
-                                      <h5 className="card-title">
-                                        {arrayData.name}
-                                      </h5>
-                                      <div
-                                        className="container w-100 p-0"
-                                        style={{ height: "38px" }}
-                                      >
-                                        <span className="m-1">
-                                          {arrayData.qty}
-                                        </span>
-                                        <span className="m-1">
-                                          {arrayData.size}
-                                        </span>
-                                        <span className="m-1">{data}</span>
-                                        <div className=" d-inline ms-2 h-100 w-20 fs-5">
-                                          ₹{arrayData.price}/-
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
+                {/* Display the grid of items */}
+                <div className="row">
+                  {itemGroup.map((item, idx) => (
+                    !item.Order_date && ( // Exclude the Order_date object from the grid
+                      <div key={idx} className="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div
+                          className="card mt-3"
+                          style={{
+                            width: "100%",
+                            maxHeight: "360px",
+                          }}
+                        >
+                          <img
+                            src={item.img}
+                            className="card-img-top"
+                            alt="..."
+                            style={{
+                              height: "120px",
+                              objectFit: "fill",
+                            }}
+                          />
+                          <div className="card-body">
+                            <h5 className="card-title">{item.name}</h5>
+                            <div
+                              className="container w-100 p-0"
+                              style={{ height: "38px" }}
+                            >
+                              <span className="m-1">{item.qty}</span>
+                              <span className="m-1">{item.size}</span>
+                              <div className="d-inline ms-2 h-100 w-20 fs-5">
+                                ₹{item.price}/-
+                              </div>
                             </div>
-                          );
-                        });
-                      })
-                  : "";
-              })
-            : ""}
-        </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  ))}
+                </div>
+              </div>
+            ))
+        ) : (
+          <div className="text-center mt-5">
+            <h3>You have not ordered yet.</h3>
+          </div>
+        )}
       </div>
-
-      <Footer />
     </div>
-  );
+
+    <Footer />
+  </div>
+);
 }
-// {"orderData":{"_id":"63024fd2be92d0469bd9e31a","email":"mohanDas@gmail.com","order_data":[[[{"id":"62ff20fbaed6a15f800125e9","name":"Chicken Fried Rice","qty":"4","size":"half","price":520},{"id":"62ff20fbaed6a15f800125ea","name":"Veg Fried Rice","qty":"4","size":"half","price":440}],"2022-08-21T15:31:30.239Z"],[[{"id":"62ff20fbaed6a15f800125f4","name":"Mix Veg Pizza","qty":"4","size":"medium","price":800},{"id":"62ff20fbaed6a15f800125f3","name":"Chicken Doub;e Cheeze Pizza","qty":"4","size":"regular","price":480}],"2022-08-21T15:32:38.861Z"]],"__v":0}}
+
+
+

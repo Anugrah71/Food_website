@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Category.css";
+import "../styles/Category.css";
 
 export default function Category(props) {
   const [activeCategory, setActiveCategory] = useState(null);

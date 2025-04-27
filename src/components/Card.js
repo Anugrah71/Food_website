@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatchCart, useCart } from "./ContextReducer";
-import "../Card.css";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { useDispatchCart, useCart } from "../context/ContextReducer";
+import "../styles/Card.css";
 export default function Card(props) {
   let priceRef = useRef();
 
@@ -13,53 +13,37 @@ export default function Card(props) {
 
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
+  const [isAdded, setIsAdded] = useState(false);
   const handleAddToCart = async () => {
-    let food = [];
-    for (const item of data) {
-      if (item.id === props.foodItems._id) {
-        food = item;
-        break;
-      }
-    }
+    const food = data.find((item) => item.id === props.foodItems._id);
+    const isUpdate = food && food.size === size;
 
-    if (food !== []) {
-      if (food.size === size) {
-        await dispatch({
+    const action = isUpdate
+      ? {
           type: "UPDATE",
           id: props.foodItems._id,
           price: finalPrice,
           qty: qty,
-        });
-        return;
-      } else if (food.size !== size) {
-        await dispatch({
+        }
+      : {
           type: "ADD",
           id: props.foodItems._id,
           name: props.foodItems.name,
           price: finalPrice,
           qty: qty,
           size: size,
-          img: props.ImgSrc,
-        });
-        console.log("Size different so simply ADD one more to the list");
-        return;
-      }
-      return;
-    }
+          img: props.foodItems.img,
+        };
 
-    await dispatch({
-      type: "ADD",
-      id: props.foodItems._id,
-      name: props.foodItems.name,
-      price: finalPrice,
-      qty: qty,
-      size: size,
-    });
-
-    console.log(data);
+    await dispatch(action);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
   };
 
-  let finalPrice = qty * parseInt(option[size]);
+  const finalPrice = useMemo(
+    () => qty * parseInt(option[size] || 0),
+    [qty, size, option]
+  );
   useEffect(() => {
     setSize(priceRef.current.value);
   }, []);
@@ -69,12 +53,7 @@ export default function Card(props) {
       <div>
         <div className="menu-item">
           <div class="item-img">
-            <img
-              src={props.foodItems.img}
-              className=""
-              alt="..."
-              style={{ height: "120px", objectFit: "fill" }}
-            />
+            <img src={props.foodItems.img} className="img" alt="..." />
           </div>
           <div className="item-name">{props.foodItems.name}</div>
           <div className="Wrap-price">
@@ -103,8 +82,12 @@ export default function Card(props) {
           </div>
 
           <hr className=""></hr>
-          <button className={`add-btn`} onClick={handleAddToCart}>
-            Add to Cart
+          <button
+            className={`add-btn`}
+            onClick={handleAddToCart}
+            disabled={isAdded}
+          >
+            {isAdded ? "Added" : "Add to Cart"}
           </button>
         </div>
       </div>
