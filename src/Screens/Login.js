@@ -58,9 +58,6 @@ export default function Login() {
               value={credentials.email}
               onChange={onChange}
             />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
           </div>
 
           <div className="mb-3">
@@ -82,8 +79,8 @@ export default function Login() {
             Submit
           </button>
 
-          <Link to="/createuser" className="btn btn-outline-danger w-100">
-            I'm a new user
+          <Link to="/createuser" className="btn btn-danger w-100">
+            Sign Up
           </Link>
         </form>
       </div>
