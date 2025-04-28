@@ -13,10 +13,10 @@ function App() {
       <Router>
         <div>
           <Routes>
-            <Route exath path="/" element={<Home />} />
-            <Route exath path="/login" element={<Login />} />
-            <Route exath path="/createuser" element={<Signup />} />
-            <Route exath path="/myOrders" element={<MyOrders />} />
+            <Route  path="/" element={<Home />} />
+            <Route  path="/login" element={<Login />} />
+            <Route  path="/createuser" element={<Signup />} />
+            <Route  path="/myOrders" element={<MyOrders />} />
           </Routes>
         </div>
       </Router>
