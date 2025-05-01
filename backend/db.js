@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-const mongoURI = "mongodb+srv://Test_db:3878@cluster1.hjxodni.mongodb.net/<dbname>?retryWrites=true&w=majority&appName=Cluster1";
+
+const mongoURI = process.env.MONGO_URI;
 const mongoDB = async () => {
   try {
     await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
