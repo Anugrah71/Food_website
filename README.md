@@ -2,11 +2,6 @@ Food Delivery App
 A full-stack MERN (MongoDB, Express, React, Node.js) application for ordering food online. This project demonstrates a food delivery platform where users can browse food items, place orders, and manage their accounts.
 
 
-🚀 Demo
-Frontend: https://food-website-1-ck7j.onrender.com
-Backend: https://food-website-e2hb.onrender.com
-
-
 🛠 Features
 User authentication (Sign up, Login)
 Browse food items by category
