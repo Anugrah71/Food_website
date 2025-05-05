@@ -14,7 +14,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const loadData = async () => {
-    let response = await fetch("http://localhost:5000/api/foodData", {
+    let response = await fetch("https://food-website-e2hb.onrender.com/api/foodData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
