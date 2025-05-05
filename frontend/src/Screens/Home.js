@@ -12,9 +12,10 @@ export default function Home() {
   const [foodItems, setFoodItems] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   const loadData = async () => {
-    let response = await fetch("https://food-website-e2hb.onrender.com/api/foodData", {
+    let response = await fetch(`${backendURL}/api/foodData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

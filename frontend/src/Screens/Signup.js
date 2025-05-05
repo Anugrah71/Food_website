@@ -11,7 +11,9 @@ export default function Signup() {
   let Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("https://food-website-e2hb.onrender.com/api/createuser", {
+    const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+    const response = await fetch(`${backendURL}/api/createuser`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json'

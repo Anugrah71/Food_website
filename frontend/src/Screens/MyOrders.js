@@ -7,7 +7,9 @@ export default function MyOrder() {
 
   const fetchMyOrder = async () => {
     try {
-      const response = await fetch("https://food-website-e2hb.onrender.com/api/MyOrderData", {
+      const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+      const response = await fetch(`${backendURL}/api/MyOrderData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import "../styles/Cart.css";
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   if (data.length === 0) {
     return (
@@ -18,7 +19,7 @@ export default function Cart() {
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
     console.log("User Email:>>>>>>>>>>>>>>>>>>>>>>>>>", userEmail);
-    let response = await fetch("https://food-website-e2hb.onrender.com/api/orderData", {
+    let response = await fetch(`${backendURL}/api/orderData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

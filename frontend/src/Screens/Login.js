@@ -9,7 +9,9 @@ export default function Login() {
   let Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("https://food-website-e2hb.onrender.com/api/loginusers", {
+    const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+    const response = await fetch(`${backendURL}/api/loginusers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
