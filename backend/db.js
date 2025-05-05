@@ -5,7 +5,7 @@ require("dotenv").config();
 const mongoURI = process.env.MONGODB_URI;
 const mongoDB = async () => {
   try {
-    await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(mongoURI);
     console.log("Connected to MongoDB");
 
     const fetch_data = await mongoose.connection.db.collection("newFoodData");
