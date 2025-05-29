@@ -33,10 +33,9 @@ return (
   <div>
     <Navbar />
 
-    {/* Add a wrapper with a minimum height */}
     <div
       className="container d-flex flex-column"
-      style={{ minHeight: "calc(100vh - 100px)" }} // Adjust for header/footer height
+      style={{ minHeight: "calc(100vh - 100px)" }} 
     >
       <div className="row flex-grow-1">
         {orderData.orderData && orderData.orderData.order_data ? (
@@ -53,10 +52,9 @@ return (
                   </div>
                 )}
 
-                {/* Display the grid of items */}
                 <div className="row">
                   {itemGroup.map((item, idx) => (
-                    !item.Order_date && ( // Exclude the Order_date object from the grid
+                    !item.Order_date && ( 
                       <div key={idx} className="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div
                           className="card mt-3"
