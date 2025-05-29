@@ -120,14 +120,12 @@ export default function Home() {
 
       <Category foodCatdata={foodCat} onCategorySelect={handleCategorySelect} />
 
-      {/* Food Cards Section */}
+
       <div className="m-3 container">
-  {/* Only display the selected category */}
   {selectedCategory && (
     <div>
       <div className="fs-3 m-3">{selectedCategory}</div>
       <hr />
-      {/* Filter items for the selected category */}
       {foodItems.length > 0 ? (
         <div className="row">
           {foodItems
@@ -156,7 +154,6 @@ export default function Home() {
     </div>
   )}
 
-  {/* If no category is selected, show all items grouped by category */}
   {!selectedCategory &&
     foodCat.length > 0 &&
     foodCat.map((data) => {
