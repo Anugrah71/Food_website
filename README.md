@@ -11,7 +11,7 @@ Responsive design for mobile and desktop
 
 
 📦 Tech Stack
-Frontend: React, Tailwind CSS
+Frontend: React, Bootstrap 
 Backend: Node.js, Express
 Database: MongoDB
 
