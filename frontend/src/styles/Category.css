@@ -5,6 +5,14 @@
     background-color: #f7f2ff;
     border-bottom: 1px solid #e8e1f6;
 }
+@media (max-width: 575px) {
+  .categories-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+
+    padding: 10px;
+  }
+}
 
 .category-box {
     display: flex;
