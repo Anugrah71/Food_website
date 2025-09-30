@@ -29,5 +29,10 @@ const mongoDB = async () => {
 
     fetchData();
 
-module.exports = mongoDB;
+  } catch (err) {
+    console.error("Error connecting to MongoDB, retrying in 5s...", err);
+    setTimeout(mongoDB, 5000);
+  }
+};
 
+module.exports = mongoDB;
