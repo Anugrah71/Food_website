@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navebar from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import "../styles/Home.css";
@@ -12,19 +12,42 @@ export default function Home() {
   const [foodItems, setFoodItems] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null); 
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   const loadData = async () => {
-    let response = await fetch(`${backendURL}/api/foodData`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    response = await response.json();
-    setFoodItems(response[0]);
-
-    setFoodCat(response[1]);
+    setLoading(true);
+    setError(null);
+    const controller = new AbortController();
+    const signal = controller.signal;
+    try {
+      const res = await fetch(`${backendURL}/api/foodData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal,
+      });
+      if (!res.ok) {
+        throw new Error(`Server responded with ${res.status}`);
+      }
+      const data = await res.json();
+     
+      if (!Array.isArray(data) || data.length < 2) {
+        throw new Error("Unexpected data format from server");
+      }
+      setFoodItems(data[0] || []);
+      setFoodCat(data[1] || []);
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        console.error("Failed to load data:", err);
+        setError(err.message || "Failed to fetch data");
+      }
+    } finally {
+      setLoading(false);
+    }
+    return () => controller.abort();
   };
 
   useEffect(() => {
@@ -37,7 +60,7 @@ export default function Home() {
 
   return (
     <div>
-      <Navebar />
+      <Navbar />
 
       {/* Carousel Section */}
       <div
@@ -46,10 +69,7 @@ export default function Home() {
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-          <div
-            className="form-div position-absolute bottom-0 start-0 w-100 d-flex justify-content-center"
-            
-          >
+          <div className="form-div position-absolute bottom-0 start-0 w-100 d-flex justify-content-center">
             <form className=" w-100 px-5">
               <input
                 className="form-control me-2 search-box"
@@ -120,76 +140,106 @@ export default function Home() {
 
       <Category foodCatdata={foodCat} onCategorySelect={handleCategorySelect} />
 
-
       <div className="m-3 container">
-  {selectedCategory && (
-    <div>
-      <div className="fs-3 m-3">{selectedCategory}</div>
-      <hr />
-      {foodItems.length > 0 ? (
-        <div className="row">
-          {foodItems
-            .filter((item) => {
-              // Filter by selected category and search term
-              return (
-                item.CategoryName.toLowerCase() === selectedCategory.toLowerCase() &&
-                item.name.toLowerCase().includes(search.toLowerCase())
-              );
-            })
-            .map((filteredItem) => (
-              <div
-                key={filteredItem._id}
-                className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center"
-              >
-                <Card
-                  foodItems={filteredItem}
-                  options={filteredItem.options}
-                />
-              </div>
-            ))}
-        </div>
-      ) : (
-        <div>No items found in this category</div>
-      )}
-    </div>
-  )}
-
-  {!selectedCategory &&
-    foodCat.length > 0 &&
-    foodCat.map((data) => {
-      const filteredItems = foodItems.filter((item) => {
-        return (
-          item.CategoryName.toLowerCase() === data.CategoryName.toLowerCase() &&
-          item.name.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-      if (filteredItems.length === 0) return null;
-      return (
-        <div key={data._id}>
-          <div className="fs-3 m-3">{data.CategoryName}</div>
-          <hr />
-          {filteredItems.length > 0 ? (
-            <div className="row">
-              {filteredItems.map((filteredItem) => (
-                <div
-                  key={filteredItem._id}
-                  className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ml-2 d-flex justify-content-center"
-                >
-                  <Card
-                    foodItems={filteredItem}
-                    options={filteredItem.options}
-                  />
-                </div>
-              ))}
+        {loading && (
+          <div
+            className="d-flex flex-column align-items-center my-5"
+            data-testid="loading-indicator"
+          >
+            <div className="spinner-border text-primary mb-3" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
-          ) : (
-            <div>No items found in this category</div>
-          )}
-        </div>
-      );
-    })}
-</div>
+            <small className="text-muted">Fetching fresh items...</small>
+          </div>
+        )}
+        {!loading && error && (
+          <div
+            className="alert alert-danger"
+            role="alert"
+            data-testid="error-message"
+          >
+            {error}{" "}
+            <button
+              className="btn btn-sm btn-outline-light ms-2"
+              onClick={loadData}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+        {!loading && !error && (
+          <>
+            {selectedCategory && (
+              <div>
+                <div className="fs-3 m-3">{selectedCategory}</div>
+                <hr />
+                {foodItems.length > 0 ? (
+                  <div className="row">
+                    {foodItems
+                      .filter((item) => {
+                        // Filter by selected category and search term
+                        return (
+                          item.CategoryName.toLowerCase() ===
+                            selectedCategory.toLowerCase() &&
+                          item.name.toLowerCase().includes(search.toLowerCase())
+                        );
+                      })
+                      .map((filteredItem) => (
+                        <div
+                          key={filteredItem._id}
+                          className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center"
+                        >
+                          <Card
+                            foodItems={filteredItem}
+                            options={filteredItem.options}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                ) : (
+                  <div>No items found in this category</div>
+                )}
+              </div>
+            )}
 
+            {!selectedCategory &&
+              foodCat.length > 0 &&
+              foodCat.map((data) => {
+                const filteredItems = foodItems.filter((item) => {
+                  return (
+                    item.CategoryName.toLowerCase() ===
+                      data.CategoryName.toLowerCase() &&
+                    item.name.toLowerCase().includes(search.toLowerCase())
+                  );
+                });
+                if (filteredItems.length === 0) return null;
+                return (
+                  <div key={data._id}>
+                    <div className="fs-3 m-3">{data.CategoryName}</div>
+                    <hr />
+                    {filteredItems.length > 0 ? (
+                      <div className="row">
+                        {filteredItems.map((filteredItem) => (
+                          <div
+                            key={filteredItem._id}
+                            className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center"
+                          >
+                            <Card
+                              foodItems={filteredItem}
+                              options={filteredItem.options}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div>No items found in this category</div>
+                    )}
+                  </div>
+                );
+              })}
+          </>
+        )}
+      </div>
 
       <Footer />
     </div>
