@@ -11,7 +11,7 @@ export default function Signup() {
   let Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const backendURL = process.env.REACT_APP_BACKEND_URL;
+    const backendURL = import.meta.env.VITE_BACKEND_URLL;
 
     const response = await fetch(`${backendURL}/api/createuser`, {
       method: 'POST',

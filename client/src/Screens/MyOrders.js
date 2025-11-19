@@ -7,7 +7,7 @@ export default function MyOrder() {
 
   const fetchMyOrder = async () => {
     try {
-      const backendURL = process.env.REACT_APP_BACKEND_URL;
+      const backendURL = import.meta.env.VITE_BACKEND_URLL;
 
       const response = await fetch(`${backendURL}/api/MyOrderData`, {
         method: "POST",

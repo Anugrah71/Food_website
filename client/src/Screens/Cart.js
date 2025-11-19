@@ -6,7 +6,7 @@ import "../styles/Cart.css";
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
-  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_BACKEND_URLL;
 
   if (data.length === 0) {
     return (
