@@ -6,7 +6,7 @@ import "../styles/Cart.css";
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
-  const backendURL = import.meta.env.VITE_BACKEND_URLL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   if (data.length === 0) {
     return (

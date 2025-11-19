@@ -1,29 +1,25 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function Login() {
   const [credentials, setcredentials] = useState({
-    name: "",
     email: "",
     password: "",
-    geolocation: ""
   });
   let Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const backendURL = import.meta.env.VITE_BACKEND_URLL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-    const response = await fetch(`${backendURL}/api/createuser`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json'
+    const response = await fetch(`${backendURL}/api/loginusers`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: credentials.name,
         email: credentials.email,
         password: credentials.password,
-        location: credentials.geolocation
-      }) 
+      }),
     });
 
     const json = await response.json();
@@ -31,7 +27,7 @@ export default function Signup() {
     if (!json.success) {
       alert("Enter valid credentials");
     }
-    else{
+    if (json.success) {
       localStorage.setItem("authToken", json.authToken);
       localStorage.setItem("userEmail", credentials.email);
       Navigate("/");
@@ -44,24 +40,12 @@ export default function Signup() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%" }}>
+      <div
+        className="card shadow p-4"
+        style={{ maxWidth: "400px", width: "100%" }}
+      >
         <h3 className="text-center mb-4">Sign Up</h3>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputUserName" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control input"
-              id="exampleInputUserName"
-              placeholder="Enter your name"
-              name='name'
-              value={credentials.name}
-              onChange={onChange}
-            />
-          </div>
-
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
@@ -72,11 +56,10 @@ export default function Signup() {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter your email"
-              name='email'
+              name="email"
               value={credentials.email}
               onChange={onChange}
             />
-        
           </div>
 
           <div className="mb-3">
@@ -88,23 +71,8 @@ export default function Signup() {
               className="form-control"
               id="exampleInputPassword1"
               placeholder="Enter your password"
-              name='password'
+              name="password"
               value={credentials.password}
-              onChange={onChange}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="exampleInputAddress" className="form-label">
-              Address
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputAddress"
-              placeholder="Enter your address"
-              name='geolocation'
-              value={credentials.geolocation}
               onChange={onChange}
             />
           </div>
@@ -113,8 +81,8 @@ export default function Signup() {
             Submit
           </button>
 
-          <Link to="/login" className="btn btn-danger w-100 mb-2">
-            Log In
+          <Link to="/createuser" className="btn btn-danger w-100">
+            Sign Up
           </Link>
         </form>
       </div>

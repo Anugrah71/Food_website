@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Signup() {
   const [credentials, setcredentials] = useState({
+    name: "",
     email: "",
     password: "",
+    geolocation: "",
   });
   let Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const backendURL = import.meta.env.VITE_BACKEND_URLL;
-
-    const response = await fetch(`${backendURL}/api/loginusers`, {
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const response = await fetch(`${backendURL}/api/createuser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name: credentials.name,
         email: credentials.email,
         password: credentials.password,
+        location: credentials.geolocation,
       }),
     });
 
@@ -26,8 +29,7 @@ export default function Login() {
     console.log(json);
     if (!json.success) {
       alert("Enter valid credentials");
-    }
-    if (json.success) {
+    } else {
       localStorage.setItem("authToken", json.authToken);
       localStorage.setItem("userEmail", credentials.email);
       Navigate("/");
@@ -46,6 +48,21 @@ export default function Login() {
       >
         <h3 className="text-center mb-4">Sign Up</h3>
         <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="exampleInputUserName" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control input"
+              id="exampleInputUserName"
+              placeholder="Enter your name"
+              name="name"
+              value={credentials.name}
+              onChange={onChange}
+            />
+          </div>
+
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
@@ -77,12 +94,27 @@ export default function Login() {
             />
           </div>
 
+          <div className="mb-3">
+            <label htmlFor="exampleInputAddress" className="form-label">
+              Address
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="exampleInputAddress"
+              placeholder="Enter your address"
+              name="geolocation"
+              value={credentials.geolocation}
+              onChange={onChange}
+            />
+          </div>
+
           <button type="submit" className="btn btn-success w-100 mb-2">
             Submit
           </button>
 
-          <Link to="/createuser" className="btn btn-danger w-100">
-            Sign Up
+          <Link to="/login" className="btn btn-danger w-100 mb-2">
+            Log In
           </Link>
         </form>
       </div>

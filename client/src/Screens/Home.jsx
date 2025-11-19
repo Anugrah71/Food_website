@@ -14,7 +14,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(null); 
-  const backendURL = import.meta.env.VITE_BACKEND_URLL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const loadData = async () => {
     setLoading(true);
