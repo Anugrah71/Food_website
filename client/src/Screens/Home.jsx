@@ -12,9 +12,9 @@ export default function Home() {
   const [foodItems, setFoodItems] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(null); 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const loadData = async () => {
     setLoading(true);
@@ -33,7 +33,7 @@ export default function Home() {
         throw new Error(`Server responded with ${res.status}`);
       }
       const data = await res.json();
-     
+
       if (!Array.isArray(data) || data.length < 2) {
         throw new Error("Unexpected data format from server");
       }
@@ -83,33 +83,27 @@ export default function Home() {
           </div>
           <div className="carousel-item active ">
             <img
-              src="/images/pizza1111.avif"
+              src="/images/Img1.png"
               className="d-block w-100 carousel-img"
               alt="pizza"
             />
           </div>
           <div className="carousel-item">
             <img
-              src="/images/3burger.jpg"
+              src="/images/Img2.png"
               className="d-block w-100 carousel-img"
               alt="Burger"
             />
           </div>
           <div className="carousel-item">
             <img
-              src="/images/sandwitch.jpg"
+              src="/images/Img3.png"
               className="d-block w-100 carousel-img"
               alt="Pizza"
             />
           </div>
 
-          <div className="carousel-item">
-            <img
-              src="/images/biryani.jpg"
-              className="d-block w-100 carousel-img"
-              alt="Pizza"
-            />
-          </div>
+          
         </div>
 
         <button
