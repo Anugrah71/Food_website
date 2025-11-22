@@ -111,7 +111,8 @@ root/
 
 ```
 git clone <repo-url>
-cd soulful-meals
+cd Food_website
+
 ```
 
 ### **2. Install client dependencies**
@@ -174,12 +175,4 @@ npm run dev
 
 ---
 
-## 📄 License
 
-This project is free to use for learning or portfolio purposes.
-
----
-
-## 🙌 Contributing
-
-Pull requests are welcome! Feel free to improve UI, UX, performance, or add features.
