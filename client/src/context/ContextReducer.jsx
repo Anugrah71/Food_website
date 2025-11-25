@@ -19,6 +19,19 @@ const reducer = (state, action) => {
                     arr[index] = { ...food, qty: parseInt(action.qty) + food.qty, price: action.price + food.price }
                 }
                 return arr
+//Need to change the find to map
+// case "UPDATE":
+//   return state.map((food) => 
+//     food.id === action.id
+//       ? {
+//           ...food,
+//           qty: food.qty + parseInt(action.qty),
+//           price: food.price + action.price
+//         }
+//       : food
+//   );
+
+                
             })
             return arr
             case "DROP":
