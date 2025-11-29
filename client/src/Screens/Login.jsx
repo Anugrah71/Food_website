@@ -11,7 +11,6 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const backendURL = import.meta.env.VITE_BACKEND_URL;
-
     const response = await fetch(`${backendURL}/api/loginusers`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,6 +21,7 @@ export default function Login() {
     });
 
     const json = await response.json();
+
     if (!json.success) {
       alert("Enter valid credentials");
     }
@@ -39,10 +39,15 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f9f7f3] p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-[0_3px_10px_rgba(122,102,171,0.15)] p-8 border border-[#e8e1f6]">
-        <h3 className="text-center text-3xl font-bold text-[#4a2c82] mb-6">Login</h3>
+        <h3 className="text-center text-3xl font-bold text-[#4a2c82] mb-6">
+          Login
+        </h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="exampleInputEmail1" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="exampleInputEmail1"
+              className="block text-gray-700 font-medium mb-2"
+            >
               Email address
             </label>
             <input
@@ -57,7 +62,10 @@ export default function Login() {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="exampleInputPassword1" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="exampleInputPassword1"
+              className="block text-gray-700 font-medium mb-2"
+            >
               Password
             </label>
             <input
