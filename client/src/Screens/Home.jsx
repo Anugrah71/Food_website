@@ -3,10 +3,24 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import "../styles/Home.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 import Category from "../components/Category";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+// --- Swiper Styles ---
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+// Define carousel images
+const carouselImages = [
+  "/images/Img1.png",
+  "/images/Img2.png",
+  "/images/Img3.png",
+  "/images/Img4.jpg",
+];
 export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItems, setFoodItems] = useState([]);
@@ -63,76 +77,39 @@ export default function Home() {
       <Navbar />
 
       {/* Carousel Section */}
-      <div
-        id="carouselExampleFade"
-        className="carousel slide carousel-fade"
-        data-bs-ride="carousel"
-      >
-        <div className="carousel-inner">
-          <div className="form-div position-absolute bottom-0 start-0 w-100 d-flex justify-content-center">
-            <form className=" w-100 px-5">
-              <input
-                className="form-control me-2 search-box"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="carousel-item active ">
-            <img
-              src="/images/Img1.png"
-              className="d-block w-100 carousel-img"
-              alt="pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="/images/Img2.png"
-              className="d-block w-100 carousel-img"
-              alt="Burger"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="/images/Img3.png"
-              className="d-block w-100 carousel-img"
-              alt="Pizza"
-            />
-          </div>
 
-          
-        </div>
-
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleFade"
-          data-bs-slide="prev"
+      <div className="relative w-full h-[450px] md:h-[550px]">
+        <Swiper
+          className="w-full h-full z-0"
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000 }}
+          modules={[Autoplay, Pagination, Navigation]}
         >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleFade"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+          {carouselImages.map((img, i) => (
+            <SwiperSlide key={i}>
+              <img src={img} className="w-full h-full object-cover" />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       <Category foodCatdata={foodCat} onCategorySelect={handleCategorySelect} />
+      <div className="flex justify-center my-6 w-full">
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search for food..."
+          className="w-[80%]
+               h-14 px-6 
+               rounded-full 
+               bg-white shadow-md 
+               outline-none text-gray-800 
+               placeholder-gray-500 
+               text-lg"
+        />
+      </div>
 
       <div className="m-3 container">
         {loading && (

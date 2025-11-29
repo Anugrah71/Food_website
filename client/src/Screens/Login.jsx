@@ -7,15 +7,14 @@ export default function Login() {
     password: "",
   });
   let Navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     const response = await fetch(`${backendURL}/api/loginusers`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: credentials.email,
         password: credentials.password,
@@ -23,7 +22,6 @@ export default function Login() {
     });
 
     const json = await response.json();
-    console.log(json);
     if (!json.success) {
       alert("Enter valid credentials");
     }
@@ -39,22 +37,18 @@ export default function Login() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div
-        className="card shadow p-4"
-        style={{ maxWidth: "400px", width: "100%" }}
-      >
-        <h3 className="text-center mb-4">Sign Up</h3>
+    <div className="min-h-screen flex items-center justify-center bg-[#f9f7f3] p-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-[0_3px_10px_rgba(122,102,171,0.15)] p-8 border border-[#e8e1f6]">
+        <h3 className="text-center text-3xl font-bold text-[#4a2c82] mb-6">Login</h3>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
+          <div className="mb-4">
+            <label htmlFor="exampleInputEmail1" className="block text-gray-700 font-medium mb-2">
               Email address
             </label>
             <input
               type="email"
-              className="form-control"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e3f9c] focus:border-transparent bg-[#f7f2ff]"
               id="exampleInputEmail1"
-              aria-describedby="emailHelp"
               placeholder="Enter your email"
               name="email"
               value={credentials.email}
@@ -62,13 +56,13 @@ export default function Login() {
             />
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+          <div className="mb-6">
+            <label htmlFor="exampleInputPassword1" className="block text-gray-700 font-medium mb-2">
               Password
             </label>
             <input
               type="password"
-              className="form-control"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e3f9c] focus:border-transparent bg-[#f7f2ff]"
               id="exampleInputPassword1"
               placeholder="Enter your password"
               name="password"
@@ -77,12 +71,18 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-success w-100 mb-2">
+          <button
+            type="submit"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-200 mb-3"
+          >
             Submit
           </button>
 
-          <Link to="/createuser" className="btn btn-danger w-100">
-            Sign Up
+          <Link
+            to="/createuser"
+            className="block w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center transition duration-200 no-underline"
+          >
+            Create a new account
           </Link>
         </form>
       </div>
