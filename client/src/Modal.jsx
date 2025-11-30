@@ -1,40 +1,19 @@
 import React from "react";
 import ReactDom from "react-dom";
 
-const MODAL_STYLES = {
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  backgroundColor: "rgb(34,34,34)",
-  transform: "translate(-50%, -50%)",
-  zIndex: 1000,
-  height: "90%",
-  width: "90%",
-};
-
-const OVERLAY_STYLES = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: "rgba(0, 0, 0, .7)",
-  zIndex: 1000,
-};
-
 export default function Modal({ children, onClose }) {
   return ReactDom.createPortal(
     <>
-      <div style={OVERLAY_STYLES} />
-      <div style={MODAL_STYLES}>
+      <div className="fixed inset-0 z-[1000] bg-black/70" onClick={onClose} />
+
+      <div className="fixed top-1/2 left-1/2 z-[1001] h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 overflow-auto rounded-lg bg-[#222] p-4 shadow-xl">
         <button
-          className="btn bg-danger fs-4"
-          style={{ marginLeft: "90%", marginTop: "-35px" }}
           onClick={onClose}
+          className="absolute top-2 right-3 text-2xl font-bold text-white transition hover:text-red-400"
         >
-          {" "}
-          X{" "}
+          ✕
         </button>
+
         {children}
       </div>
     </>,

@@ -11,8 +11,11 @@ export default function MyOrder() {
       const response = await fetch(`${backendURL}/api/MyOrderData`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: localStorage.getItem("userEmail") }),
+        body: JSON.stringify({
+          email: localStorage.getItem("userEmail"),
+        }),
       });
+
       const json = await response.json();
       setOrderData(json);
     } catch (error) {
@@ -25,17 +28,17 @@ export default function MyOrder() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <Navbar />
 
-      <div className="container mx-auto my-8 flex-grow px-4">
+      <div className="mx-auto my-10 w-full max-w-6xl flex-grow px-4">
         {orderData.orderData && orderData.orderData.order_data ? (
           orderData.orderData.order_data
             .slice(0)
             .reverse()
             .map((itemGroup, index) => (
-              <div key={index} className="mb-8">
-                {/* Display the Order Date */}
+              <div key={index} className="mb-10">
+                {/* Order Date */}
                 {itemGroup[0]?.Order_date && (
                   <div className="mb-6 text-center">
                     <h5 className="inline-block border-b-2 border-[#5e3f9c] pb-1 text-xl font-bold text-gray-700">
@@ -44,32 +47,36 @@ export default function MyOrder() {
                   </div>
                 )}
 
-                {/* Grid for Items */}
+                {/* Items Grid */}
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {itemGroup.map(
                     (item, idx) =>
                       !item.Order_date && (
                         <div key={idx} className="flex justify-center">
-                          <div className="w-full overflow-hidden rounded-lg border border-[#e8e1f6] bg-white shadow-md transition-transform hover:-translate-y-1">
+                          <div className="w-full overflow-hidden rounded-lg border border-[#e8e1f6] bg-white shadow-md transition-transform duration-200 hover:-translate-y-1">
                             <img
                               src={item.img}
-                              className="h-[120px] w-full object-cover"
                               alt={item.name}
+                              className="h-[120px] w-full object-cover"
                             />
+
                             <div className="p-4">
-                              <h5 className="mb-2 truncate text-lg font-bold text-[#4a2c82]">
+                              <h5 className="mb-3 truncate text-lg font-bold text-[#4a2c82]">
                                 {item.name}
                               </h5>
-                              <div className="flex items-center justify-between text-sm text-gray-600">
+
+                              <div className="flex items-center justify-between text-sm text-gray-700">
                                 <span className="rounded bg-[#f7f2ff] px-2 py-1 text-[#5e3f9c]">
                                   Qty: {item.qty}
                                 </span>
+
                                 <span className="rounded bg-[#f7f2ff] px-2 py-1 text-[#5e3f9c] uppercase">
                                   {item.size}
                                 </span>
-                                <div className="text-lg font-semibold text-gray-800">
+
+                                <span className="text-lg font-semibold text-gray-800">
                                   ₹{item.price}/-
-                                </div>
+                                </span>
                               </div>
                             </div>
                           </div>

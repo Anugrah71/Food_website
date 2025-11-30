@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useDispatchCart, useCart } from "../context/ContextReducer";
-import "../styles/Card.css";
 export default function Card(props) {
   let priceRef = useRef();
 
@@ -52,11 +51,11 @@ export default function Card(props) {
     <div>
       <div>
         <div className="rounded-[6px] border border-[#e8e1f6] bg-white p-4 shadow-[0_3px_10px_rgba(122,102,171,0.08)] transition-shadow transition-transform duration-200 ease-linear hover:-translate-y-[3px] hover:shadow-[0_5px_15px_rgba(122,102,171,0.15)]">
-          <div className="mb-3 h-[120px] overflow-hidden rounded-[4px] bg-[#f0eaf7]">
+          <div className="mb-3 h-[160px] overflow-hidden rounded-[4px] bg-[#f0eaf7]">
             <img
               src={props.foodItems.img}
               alt="..."
-              className="h-full w-full object-cover"
+              className="h-full w-full object-fit"
             />
           </div>
 
@@ -96,7 +95,7 @@ export default function Card(props) {
           <hr />
 
           <button
-            className="cursor-pointer rounded-[4px] bg-gradient-to-r from-[#5e3f9c] to-[#9370db] px-[14px] py-[7px] font-[Georgia,serif] text-[14px] text-white transition-all duration-200 hover:-translate-y-[1px] hover:from-[#4a2c82] hover:to-[#7559bd]"
+            className="cursor-pointer rounded-[4px] bg-gradient-to-r from-[#5e3f9c] to-[#9370db] px-[14px] mt-2 py-[7px] font-[Georgia,serif] text-[14px] text-white transition-all duration-200 hover:-translate-y-[1px] hover:from-[#4a2c82] hover:to-[#7559bd]"
             onClick={handleAddToCart}
             disabled={isAdded}
           >

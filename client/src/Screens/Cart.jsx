@@ -1,7 +1,6 @@
 import React from "react";
 import Delete from "@mui/icons-material/Delete";
 import { useCart, useDispatchCart } from "../context/ContextReducer";
-import "../styles/Cart.css";
 
 export default function Cart() {
   let data = useCart();
@@ -10,74 +9,82 @@ export default function Cart() {
 
   if (data.length === 0) {
     return (
-      <div style={{ color: "white" }}>
-        <div className="fs-3 m-5 w-100 text-center">The Cart is Empty!</div>
+      <div className="w-full text-center py-10 text-gray-200 text-2xl">
+        The Cart is Empty!
       </div>
     );
   }
 
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
-    console.log("User Email:>>>>>>>>>>>>>>>>>>>>>>>>>", userEmail);
+
     let response = await fetch(`${backendURL}/api/orderData`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         order_data: data,
         email: userEmail,
         order_date: new Date().toDateString(),
       }),
     });
-    console.log("Response:", response);
+
     if (response.status === 200) {
       dispatch({ type: "DROP" });
-    } else {
-      console.error("Checkout failed with status:", response.status);
     }
   };
 
   let totalPrice = data.reduce((total, food) => total + food.price, 0);
 
   return (
-    <div>
-      <div className="container-div table-responsive table-responsive-sm table-responsive-md container m-auto mt-5">
-        <table className="table-hover table">
-          <thead className="text-success fs-4">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Option</th>
-              <th scope="col">Amount</th>
-              <th scope="col"></th>
+    <div className="w-full px-4 py-10">
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 overflow-x-auto">
+        <table className="w-full text-left border-collapse min-w-[600px]">
+          <thead>
+            <tr className="text-purple-600 text-xl border-b">
+              <th className="py-3 px-2">#</th>
+              <th className="py-3 px-2">Name</th>
+              <th className="py-3 px-2">Quantity</th>
+              <th className="py-3 px-2">Option</th>
+              <th className="py-3 px-2">Amount</th>
+              <th className="py-3 px-2"></th>
             </tr>
           </thead>
+
           <tbody>
             {data.map((food, index) => (
-              <tr key={index}>
-                <th scope="row">{index + 1}</th>
-                <td>{food.name}</td>
-                <td>{food.qty}</td>
-                <td>{food.size}</td>
-                <td>{food.price}</td>
-                <td>
-                  <button type="button" className="btn p-0">
-                    <Delete
-                      onClick={() => dispatch({ type: "REMOVE", index })}
-                    />
+              <tr
+                key={index}
+                className="border-b hover:bg-gray-50 text-gray-700 transition"
+              >
+                <td className="py-3 px-2 font-semibold">{index + 1}</td>
+                <td className="py-3 px-2">{food.name}</td>
+                <td className="py-3 px-2">{food.qty}</td>
+                <td className="py-3 px-2">{food.size}</td>
+                <td className="py-3 px-2">{food.price}</td>
+                <td className="py-3 px-2">
+                  <button
+                    className="text-red-600 hover:text-red-800"
+                    onClick={() => dispatch({ type: "REMOVE", index })}
+                  >
+                    <Delete fontSize="small" />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div>
-          <h1 className="fs-2">Total Price: {totalPrice}/-</h1>
+
+        <div className="mt-6">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Total Price: {totalPrice}/-
+          </h1>
         </div>
-        <div>
-          <button className="btn btn-checkout mt-5" onClick={handleCheckOut}>
+
+        <div className="mt-6">
+          <button
+            onClick={handleCheckOut}
+            className="bg-gradient-to-r from-purple-700 to-purple-500 text-white px-6 py-3 rounded-md font-medium shadow-md hover:shadow-lg transition"
+          >
             Check Out
           </button>
         </div>
