@@ -1,32 +1,31 @@
-# Soulful Meals – MERN Stack Food Ordering Website
+# 🍽️ Soulful Meals – MERN Stack Food Ordering Web App
 
-## 📌 Project Overview
-
-Soulful Meals is a full‑stack food ordering web application built using the **MERN Stack (MongoDB, Express, React, Node.js)**. It allows users to browse food items by category, add meals to their cart, place orders, and view order history. The project is designed as a complete prototype of a modern food‑delivery system.
+A responsive full-stack food ordering application built using the **MERN Stack**, modernized with **Tailwind CSS v4**, **Vite**, and optimized backend architecture. Users can browse food items by category, manage their cart, place orders, and view their order history.
 
 ---
 
 ## 🚀 Tech Stack
 
-### **Frontend (Client)**
+### **Frontend**
+- React (Vite)
+- Tailwind CSS v4
+- React Router DOM
+- Context API + useReducer
+- Swiper.js (Hero Slider)
+- Prettier + prettier-plugin-tailwindcss
 
-* React (Vite)
-* React Router DOM
-* Bootstrap 5 + Custom CSS
-* Context API + useReducer for global cart management
-
-### **Backend (Server)**
-
-* Node.js + Express
-* MongoDB + Mongoose
-* JWT Authentication
-* bcryptjs for password hashing
-* express-validator for validation
-* CORS enabled
+### **Backend**
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT Authentication
+- bcryptjs for password hashing
+- express-validator for form validation
+- CORS with mobile IP support
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Project Structure
+
 
 ```
 root/
@@ -34,145 +33,79 @@ root/
  └── server/   → Node/Express Backend
 ```
 
-### **Backend Highlights**
+---
 
-* Connects to MongoDB Atlas.
-* On startup, loads `food_items` and `food_Category` from DB into global variables for fast access.
-* Provides REST APIs for:
+## 🔧 Key Improvements (Migration Summary)
 
-  * User Signup & Login
-  * Food Data fetching
-  * Order placement & retrieving order history
+### ✔️ TailwindCSS Migration
+- Removed Bootstrap completely  
+- Added tailwindcss + @tailwindcss/vite  
+- Created `src/tailwind.css`  
+- Added Prettier plugin for class sorting  
+- Refactored **Navbar, Home, Category, Login, Signup, MyOrders, Footer** using Tailwind utility classes  
+- Removed all extra `.css` files tied to Bootstrap
 
-### **Frontend Highlights**
+### ✔️ Mobile Login Fix
+- Enabled CORS using the cors package  
+- Added mobile device IP to allowed origins  
+- Updated Vite config: `server: { host: true }`  
+- Works on mobile via Wi-Fi
 
-* Home page with carousel + search + category‑wise food listing
-* Authentication pages (Login, Signup)
-* Dynamic Navbar with cart badge and logout
-* Cart modal using React Portal
-* Order history page
+### ✔️ UI & Component Updates
+- Replaced Bootstrap Carousel → Swiper.js  
+- Built custom mobile hamburger menu  
+- Refactored Card.jsx & fixed className warning  
+- Cleaned App.jsx (removed Bootstrap)
 
 ---
 
-## 📂 Key Folders & Files
+## 📂 Important Files
 
-### **Client (React)**
+### **Frontend**
+- `src/main.jsx` – Tailwind entry import  
+- `src/tailwind.css` – Tailwind core  
+- `src/components/Navbar.jsx` – Mobile menu + Tailwind  
+- `src/pages/Home.jsx` – Swiper slider + search bar  
+- `src/pages/Login.jsx` / `Signup.jsx` – Tailwind UI forms  
+- `src/pages/MyOrders.jsx` – Responsive grid  
 
-* `pages/` → Home, Login, Signup, Cart, MyOrders
-* `components/` → Navbar, Card, Modal, Footer
-* `ContextReducer.jsx` → Global cart store (ADD, REMOVE, UPDATE, DROP)
-
-### **Server (Express)**
-
-* `routes/` → CreateUser, DisplayData, OrderData
-* `db.js` → MongoDB connection + global data caching
-* `models/` → User, Orders
+### **Backend**
+- `db.js` – MongoDB connection + data preload  
+- `routes/` – Auth, DisplayData, OrderData  
+- `server/index.js` – Express server + updated CORS  
 
 ---
 
 ## ✨ Features
 
-### 🔐 **Authentication**
+### 🔐 Authentication
+- User signup & login  
+- Secure password hashing  
+- JWT-based authentication  
 
-* User registration with hashed passwords
-* Login using JWT
-* Tokens stored in localStorage
+### 🛒 Cart System
+- Add/update/remove items  
+- Price based on size & quantity  
+- Context API + Reducer global store  
 
-### 🍽️ **Food Menu**
+### 📦 Ordering
+- Place orders  
+- View full order history  
 
-* Fetches items & categories dynamically from backend
-* Search functionality
-* Filter by category
-
-### 🛒 **Shopping Cart**
-
-* Add items with size + quantity
-* Calculates price based on selected options
-* Update or remove items
-* Global persistence using Context API
-
-### 📦 **Order System**
-
-* Checkout creates an order entry in DB
-* Users can view all past orders in reverse order
+### 🍱 Food Menu
+- Dynamic categories  
+- Search bar  
+- Fully responsive layout  
 
 ---
 
-## 🖼️ Assets
+## 📥 Installation
 
-* Multiple food images (pizza, burger, biryani, sandwich, etc.)
-* SVG icons (React, Vite logos)
-
----
-
-## 📥 Installation & Setup
-
-### **1. Clone the repository**
-
-```
+### 1️⃣ Clone repo
+```bash
 git clone <repo-url>
 cd Food_website
 
-```
 
-### **2. Install client dependencies**
-
-```
-cd client
-npm install
-```
-
-### **3. Install server dependencies**
-
-```
-cd ../server
-npm install
-```
-
-### **4. Create environment variables**
-
-Create a `.env` file inside **server/**:
-
-```
-MONGO_URL=your_mongo_connection_string
-JWT_SECRET=your_secret_key
-```
-
-### **5. Run the backend**
-
-```
-cd server
-npm start
-```
-
-### **6. Run the frontend**
-
-```
-cd client
-npm run dev
-```
-
----
-
-## 📌 API Endpoints Overview
-
-| Method | Endpoint        | Description                           |
-| ------ | --------------- | ------------------------------------- |
-| POST   | /api/createuser | Register new user                     |
-| POST   | /api/loginusers | Login and get JWT                     |
-| POST   | /api/foodData   | Fetch food items & categories         |
-| POST   | /api/orderData  | Place new order / Fetch order history |
-
----
-
-## 🧩 Future Improvements
-
-* Admin dashboard
-* Live order tracking
-* Online payments
-* Wishlist & favourites
-* Improved UI animations
-
----
 
 
