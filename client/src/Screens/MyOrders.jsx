@@ -8,16 +8,14 @@ export default function MyOrder() {
   const fetchMyOrder = async () => {
     try {
       const backendURL = import.meta.env.VITE_BACKEND_URL;
-
       const response = await fetch(`${backendURL}/api/MyOrderData`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: localStorage.getItem("userEmail"),
         }),
       });
+
       const json = await response.json();
       setOrderData(json);
     } catch (error) {
@@ -28,80 +26,71 @@ export default function MyOrder() {
   useEffect(() => {
     fetchMyOrder();
   }, []);
-  console.log("hh>>>>>>>>>>", orderData);
+
   return (
-    <div>
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <Navbar />
 
-      <div
-        className="container d-flex flex-column"
-        style={{ minHeight: "calc(100vh - 100px)" }}
-      >
-        <div className="row flex-grow-1">
-          {orderData.orderData && orderData.orderData.order_data ? (
-            orderData.orderData.order_data
-              .slice(0)
-              .reverse()
-              .map((itemGroup, index) => (
-                <div key={index} className="mb-4">
-                  {/* Display the Order Date */}
-                  {itemGroup[0]?.Order_date && (
-                    <div className="m-auto mt-5 text-center">
-                      <h5>{itemGroup[0].Order_date}</h5>
-                      <hr />
-                    </div>
-                  )}
+      <div className="mx-auto my-10 w-full max-w-6xl flex-grow px-4">
+        {orderData.orderData && orderData.orderData.order_data ? (
+          orderData.orderData.order_data
+            .slice(0)
+            .reverse()
+            .map((itemGroup, index) => (
+              <div key={index} className="mb-10">
+                {/* Order Date */}
+                {itemGroup[0]?.Order_date && (
+                  <div className="mb-6 text-center">
+                    <h5 className="inline-block border-b-2 border-[#5e3f9c] pb-1 text-xl font-bold text-gray-700">
+                      {itemGroup[0].Order_date}
+                    </h5>
+                  </div>
+                )}
 
-                  <div className="row">
-                    {itemGroup.map(
-                      (item, idx) =>
-                        !item.Order_date && (
-                          <div
-                            key={idx}
-                            className="col-12 col-sm-6 col-md-4 col-lg-3"
-                          >
-                            <div
-                              className="card mt-3"
-                              style={{
-                                width: "100%",
-                                maxHeight: "360px",
-                              }}
-                            >
-                              <img
-                                src={item.img}
-                                className="card-img-top"
-                                alt="..."
-                                style={{
-                                  height: "120px",
-                                  objectFit: "fill",
-                                }}
-                              />
-                              <div className="card-body">
-                                <h5 className="card-title">{item.name}</h5>
-                                <div
-                                  className="container w-100 p-0"
-                                  style={{ height: "38px" }}
-                                >
-                                  <span className="m-1">{item.qty}</span>
-                                  <span className="m-1">{item.size}</span>
-                                  <div className="d-inline ms-2 h-100 w-20 fs-5">
-                                    ₹{item.price}/-
-                                  </div>
-                                </div>
+                {/* Items Grid */}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {itemGroup.map(
+                    (item, idx) =>
+                      !item.Order_date && (
+                        <div key={idx} className="flex justify-center">
+                          <div className="w-full overflow-hidden rounded-lg border border-[#e8e1f6] bg-white shadow-md transition-transform duration-200 hover:-translate-y-1">
+                            <img
+                              src={item.img}
+                              alt={item.name}
+                              className="h-[120px] w-full object-cover"
+                            />
+
+                            <div className="p-4">
+                              <h5 className="mb-3 truncate text-lg font-bold text-[#4a2c82]">
+                                {item.name}
+                              </h5>
+
+                              <div className="flex items-center justify-between text-sm text-gray-700">
+                                <span className="rounded bg-[#f7f2ff] px-2 py-1 text-[#5e3f9c]">
+                                  Qty: {item.qty}
+                                </span>
+
+                                <span className="rounded bg-[#f7f2ff] px-2 py-1 text-[#5e3f9c] uppercase">
+                                  {item.size}
+                                </span>
+
+                                <span className="text-lg font-semibold text-gray-800">
+                                  ₹{item.price}/-
+                                </span>
                               </div>
                             </div>
                           </div>
-                        )
-                    )}
-                  </div>
+                        </div>
+                      ),
+                  )}
                 </div>
-              ))
-          ) : (
-            <div className="text-center mt-5">
-              <h3>You have not ordered yet.</h3>
-            </div>
-          )}
-        </div>
+              </div>
+            ))
+        ) : (
+          <div className="mt-20 text-center text-2xl text-gray-500">
+            <h3>You have not ordered yet.</h3>
+          </div>
+        )}
       </div>
 
       <Footer />

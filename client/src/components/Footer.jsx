@@ -1,18 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div><footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div className="col-md-4 d-flex align-items-center">
-      <Link to="/" className="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+    <footer className="mt-auto border-t border-[#e8e1f6] bg-[#f7f2ff] py-6">
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between px-4">
+        
+        {/* Left Section */}
+        <div className="mb-4 flex items-center md:mb-0">
+          <Link to="/" className="flex items-center">
+            {/* logo if needed */}
+          </Link>
+          <span className="ml-2 text-sm text-gray-600">
+            © 2025 Soulful Meals, Inc
+          </span>
+        </div>
 
-      </Link>
-      <span className="text-muted">© 2025 Soulful Meals, Inc</span>
-    </div>
-
-    <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
-    </ul>
-  </footer></div>
-  )
+        {/* Right Section */}
+        <ul className="flex gap-4">
+          {/* social icons or links */}
+        </ul>
+      </div>
+    </footer>
+  );
 }
