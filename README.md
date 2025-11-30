@@ -20,7 +20,7 @@ A responsive full-stack food ordering application built using the **MERN Stack**
 - JWT Authentication
 - bcryptjs for password hashing
 - express-validator for form validation
-- CORS with mobile IP support
+- CORS 
 
 ---
 
@@ -105,6 +105,7 @@ root/
 ```bash
 git clone <repo-url>
 cd Food_website
+
 
 
 
