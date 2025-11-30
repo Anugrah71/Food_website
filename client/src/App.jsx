@@ -12,7 +12,7 @@ function App() {
   return (
     <CartProvider>
       <Router>
-        <div className="min-h-screen flex flex-col bg-[#f9f7f3] font-sans">
+        <div className="flex min-h-screen flex-col bg-[#f9f7f3] font-sans">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

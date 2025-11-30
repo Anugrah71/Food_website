@@ -6,9 +6,8 @@ export default function Category(props) {
   const foodCategory = props.foodCatdata;
 
   const handleCategoryClick = (categoryId, categoryName) => {
-    setActiveCategory(categoryId); 
-    console.log(">>>>>>>>>>>>>>>", categoryName);
-    props.onCategorySelect(categoryName); 
+    setActiveCategory(categoryId);
+    props.onCategorySelect(categoryName);
   };
 
   return (

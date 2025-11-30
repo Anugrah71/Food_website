@@ -39,17 +39,22 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f9f7f3] p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-[0_3px_10px_rgba(122,102,171,0.15)] p-8 border border-[#e8e1f6]">
-        <h3 className="text-center text-3xl font-bold text-[#4a2c82] mb-6">Sign Up</h3>
+    <div className="flex min-h-screen items-center justify-center bg-[#f9f7f3] p-4">
+      <div className="w-full max-w-md rounded-lg border border-[#e8e1f6] bg-white p-8 shadow-[0_3px_10px_rgba(122,102,171,0.15)]">
+        <h3 className="mb-6 text-center text-3xl font-bold text-[#4a2c82]">
+          Sign Up
+        </h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="name"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Name
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e3f9c] focus:border-transparent bg-[#f7f2ff]"
+              className="w-full rounded-md border border-gray-300 bg-[#f7f2ff] px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-[#5e3f9c] focus:outline-none"
               name="name"
               value={credentials.name}
               onChange={onChange}
@@ -57,12 +62,15 @@ export default function Signup() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="email"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Email address
             </label>
             <input
               type="email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e3f9c] focus:border-transparent bg-[#f7f2ff]"
+              className="w-full rounded-md border border-gray-300 bg-[#f7f2ff] px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-[#5e3f9c] focus:outline-none"
               name="email"
               value={credentials.email}
               onChange={onChange}
@@ -70,12 +78,15 @@ export default function Signup() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="password"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e3f9c] focus:border-transparent bg-[#f7f2ff]"
+              className="w-full rounded-md border border-gray-300 bg-[#f7f2ff] px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-[#5e3f9c] focus:outline-none"
               name="password"
               value={credentials.password}
               onChange={onChange}
@@ -83,12 +94,15 @@ export default function Signup() {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="geolocation" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="geolocation"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Address
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e3f9c] focus:border-transparent bg-[#f7f2ff]"
+              className="w-full rounded-md border border-gray-300 bg-[#f7f2ff] px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-[#5e3f9c] focus:outline-none"
               name="geolocation"
               value={credentials.geolocation}
               onChange={onChange}
@@ -98,13 +112,13 @@ export default function Signup() {
 
           <button
             type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-200 mb-3"
+            className="mb-3 w-full rounded bg-green-500 px-4 py-2 font-bold text-white transition duration-200 hover:bg-green-600"
           >
             Submit
           </button>
           <Link
             to="/login"
-            className="block w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center transition duration-200 no-underline"
+            className="block w-full rounded bg-red-500 px-4 py-2 text-center font-bold text-white no-underline transition duration-200 hover:bg-red-600"
           >
             Already have an account? Log In
           </Link>

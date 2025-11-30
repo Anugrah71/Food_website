@@ -6,12 +6,12 @@ import "../styles/Cart.css";
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   if (data.length === 0) {
     return (
       <div style={{ color: "white" }}>
-        <div className="m-5 w-100 text-center fs-3">The Cart is Empty!</div>
+        <div className="fs-3 m-5 w-100 text-center">The Cart is Empty!</div>
       </div>
     );
   }
@@ -42,11 +42,8 @@ export default function Cart() {
 
   return (
     <div>
-      <div
-        className="container container-div m-auto mt-5 table-responsive table-responsive-sm table-responsive-md"
-      
-      >
-        <table className="table table-hover">
+      <div className="container-div table-responsive table-responsive-sm table-responsive-md container m-auto mt-5">
+        <table className="table-hover table">
           <thead className="text-success fs-4">
             <tr>
               <th scope="col">#</th>
@@ -80,7 +77,7 @@ export default function Cart() {
           <h1 className="fs-2">Total Price: {totalPrice}/-</h1>
         </div>
         <div>
-          <button className="btn btn-checkout  mt-5" onClick={handleCheckOut}>
+          <button className="btn btn-checkout mt-5" onClick={handleCheckOut}>
             Check Out
           </button>
         </div>

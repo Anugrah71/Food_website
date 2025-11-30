@@ -7,7 +7,6 @@
   pointer-events: none;
 }
 
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -37,14 +36,15 @@
     transform: rotate(360deg);
   }
 }
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
 }
-
 
 .carousel-img {
   width: 100%;
@@ -53,7 +53,7 @@ html, body, #root {
   filter: brightness(34%);
   margin: 0;
   padding: 0;
-  display: block; 
+  display: block;
 }
 .carousel-caption {
   position: absolute;

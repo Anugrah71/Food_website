@@ -7,7 +7,7 @@ import Cart from "../Screens/Cart";
 export default function Navbar() {
   const data = useCart();
   const [cart, setCart] = useState(false);
-  const [open, setOpen] = useState(false); 
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const Logout = () => {
@@ -16,31 +16,31 @@ export default function Navbar() {
   };
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#5e3f9c] to-[#9370db] text-white py-3">
-      <div className="flex items-center justify-between w-full px-6">
-
+    <div className="w-full bg-gradient-to-r from-[#5e3f9c] to-[#9370db] py-3 text-white">
+      <div className="flex w-full items-center justify-between px-6">
         <div className="text-[26px] font-semibold tracking-wide">
           Soulful Meals
         </div>
 
         <button
-          className="md:hidden text-white text-3xl"
+          className="text-3xl text-white md:hidden"
           onClick={() => setOpen(!open)}
         >
-           {open ? "✕" : "☰"}
-
+          {open ? "✕" : "☰"}
         </button>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-10">
-
+        <div className="hidden items-center gap-10 md:flex">
           <div className="flex items-center gap-6">
             <Link to="/" className="text-[16px] hover:text-purple-200">
               Home
             </Link>
 
             {localStorage.getItem("authToken") && (
-              <Link to="/myOrders" className="text-[16px] hover:text-purple-200">
+              <Link
+                to="/myOrders"
+                className="text-[16px] hover:text-purple-200"
+              >
                 My Orders
               </Link>
             )}
@@ -52,13 +52,13 @@ export default function Navbar() {
               <>
                 <Link
                   to="/login"
-                  className="bg-white text-[#5e3f9c] px-4 py-2 rounded-md text-[14px] font-medium hover:bg-purple-100"
+                  className="rounded-md bg-white px-4 py-2 text-[14px] font-medium text-[#5e3f9c] hover:bg-purple-100"
                 >
                   Login
                 </Link>
                 <Link
                   to="/createuser"
-                  className="bg-white text-[#5e3f9c] px-4 py-2 rounded-md text-[14px] font-medium hover:bg-purple-100"
+                  className="rounded-md bg-white px-4 py-2 text-[14px] font-medium text-[#5e3f9c] hover:bg-purple-100"
                 >
                   Signup
                 </Link>
@@ -69,10 +69,11 @@ export default function Navbar() {
                   className="relative cursor-pointer text-[16px] hover:text-purple-200"
                   onClick={() => setCart(true)}
                 >
+                  
                   <div>My Cart</div>
 
                   {data.length > 0 && (
-                    <span className="absolute -top-2 -right-5 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
+                    <span className="absolute -top-2 -right-5 rounded-full bg-red-600 px-2 py-0.5 text-xs text-white">
                       {data.length}
                     </span>
                   )}
@@ -98,8 +99,7 @@ export default function Navbar() {
 
       {/* MOBILE DROPDOWN MENU */}
       {open && (
-        <div className="md:hidden flex flex-col gap-6 bg-[#6B4ABF] py-4 px-6">
-
+        <div className="flex flex-col gap-6 bg-[#6B4ABF] px-6 py-4 md:hidden">
           <Link
             to="/"
             className="text-[18px] hover:text-purple-200"
@@ -122,7 +122,7 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="bg-white text-[#5e3f9c] px-4 py-2 rounded-md text-[16px] font-medium hover:bg-purple-100"
+                className="rounded-md bg-white px-4 py-2 text-[16px] font-medium text-[#5e3f9c] hover:bg-purple-100"
                 onClick={() => setOpen(false)}
               >
                 Login
@@ -130,7 +130,7 @@ export default function Navbar() {
 
               <Link
                 to="/createuser"
-                className="bg-white text-[#5e3f9c] px-4 py-2 rounded-md text-[16px] font-medium hover:bg-purple-100"
+                className="rounded-md bg-white px-4 py-2 text-[16px] font-medium text-[#5e3f9c] hover:bg-purple-100"
                 onClick={() => setOpen(false)}
               >
                 Signup
@@ -146,9 +146,8 @@ export default function Navbar() {
                 }}
               >
                 My Cart
-
                 {data.length > 0 && (
-                  <span className="absolute -top-2  bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
+                  <span className="absolute -top-2 rounded-full bg-red-600 px-2 py-0.5 text-xs text-white">
                     {data.length}
                   </span>
                 )}

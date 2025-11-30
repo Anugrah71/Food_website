@@ -25,10 +25,10 @@ export default function MyOrder() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <div className="container mx-auto px-4 flex-grow my-8">
+      <div className="container mx-auto my-8 flex-grow px-4">
         {orderData.orderData && orderData.orderData.order_data ? (
           orderData.orderData.order_data
             .slice(0)
@@ -37,49 +37,50 @@ export default function MyOrder() {
               <div key={index} className="mb-8">
                 {/* Display the Order Date */}
                 {itemGroup[0]?.Order_date && (
-                  <div className="text-center mb-6">
-                    <h5 className="text-xl font-bold text-gray-700 inline-block border-b-2 border-[#5e3f9c] pb-1">
+                  <div className="mb-6 text-center">
+                    <h5 className="inline-block border-b-2 border-[#5e3f9c] pb-1 text-xl font-bold text-gray-700">
                       {itemGroup[0].Order_date}
                     </h5>
                   </div>
                 )}
 
                 {/* Grid for Items */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {itemGroup.map((item, idx) =>
-                    !item.Order_date && (
-                      <div key={idx} className="flex justify-center">
-                        <div className="w-full bg-white border border-[#e8e1f6] rounded-lg shadow-md overflow-hidden transition-transform hover:-translate-y-1">
-                          <img
-                            src={item.img}
-                            className="w-full h-[120px] object-cover"
-                            alt={item.name}
-                          />
-                          <div className="p-4">
-                            <h5 className="text-lg font-bold text-[#4a2c82] mb-2 truncate">
-                              {item.name}
-                            </h5>
-                            <div className="flex justify-between items-center text-sm text-gray-600">
-                              <span className="bg-[#f7f2ff] px-2 py-1 rounded text-[#5e3f9c]">
-                                Qty: {item.qty}
-                              </span>
-                              <span className="bg-[#f7f2ff] px-2 py-1 rounded text-[#5e3f9c] uppercase">
-                                {item.size}
-                              </span>
-                              <div className="text-lg font-semibold text-gray-800">
-                                ₹{item.price}/-
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {itemGroup.map(
+                    (item, idx) =>
+                      !item.Order_date && (
+                        <div key={idx} className="flex justify-center">
+                          <div className="w-full overflow-hidden rounded-lg border border-[#e8e1f6] bg-white shadow-md transition-transform hover:-translate-y-1">
+                            <img
+                              src={item.img}
+                              className="h-[120px] w-full object-cover"
+                              alt={item.name}
+                            />
+                            <div className="p-4">
+                              <h5 className="mb-2 truncate text-lg font-bold text-[#4a2c82]">
+                                {item.name}
+                              </h5>
+                              <div className="flex items-center justify-between text-sm text-gray-600">
+                                <span className="rounded bg-[#f7f2ff] px-2 py-1 text-[#5e3f9c]">
+                                  Qty: {item.qty}
+                                </span>
+                                <span className="rounded bg-[#f7f2ff] px-2 py-1 text-[#5e3f9c] uppercase">
+                                  {item.size}
+                                </span>
+                                <div className="text-lg font-semibold text-gray-800">
+                                  ₹{item.price}/-
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )
+                      ),
                   )}
                 </div>
               </div>
             ))
         ) : (
-          <div className="text-center mt-20 text-gray-500 text-2xl">
+          <div className="mt-20 text-center text-2xl text-gray-500">
             <h3>You have not ordered yet.</h3>
           </div>
         )}
