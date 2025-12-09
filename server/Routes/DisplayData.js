@@ -1,12 +1,20 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 router.post("/foodData", async (req, res) => {
   try {
-    if (!global.food_items || !global.food_Category) {
-      return res.status(500).send("Food data is not available");
-    }
-    res.send([global.food_items, global.food_Category]);
+    const foodItems = await mongoose.connection.db
+      .collection("newFoodData")
+      .find({})
+      .toArray();
+
+    const category = await mongoose.connection.db
+      .collection("foodCategory")
+      .find({})
+      .toArray();
+
+    res.send([foodItems, category]);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
