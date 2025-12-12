@@ -28,14 +28,24 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, salt);
 
-      await User.create({
+      const newUser = await User.create({
         name: req.body.name,
         password: secPass,
         email: req.body.email,
         location: req.body.location,
+        role: req.body.role || "user",
       });
-
-      res.json({ success: true, message: "User created successfully" });
+      const data = {
+        user: {
+          id: newUser.id,
+        },
+      };
+      const authToken = jwt.sign(data, jwtSecret, { expiresIn: "1h" });
+      res.json({
+        success: true,
+        message: "User created successfully",
+        authToken,
+      });
     } catch (error) {
       console.error(error.message);
       res
@@ -57,17 +67,24 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     const { email, password } = req.body;
-
-   
+    console.log("Type email:>", email);
     try {
       const userData = await User.findOne({ email });
+      console.log("UserData", userData);
       if (!userData) {
-        return res.status(400).json({ success: false, error: "Invalid credentials" });
+        console.log("Inside the");
+        return res
+          .status(400)
+          .json({ success: false, error: "User not found" });
       }
-
+      console.log("pass", password);
+      console.log("storedpass", userData.password);
       const passwordCompare = await bcrypt.compare(password, userData.password);
+      console.log("pass", passwordCompare);
       if (!passwordCompare) {
-        return res.status(400).json({ success: false, error: "Invalid credentials" });
+        return res
+          .status(400)
+          .json({ success: false, error: "Invalid credentials" });
       }
 
       const data = {
@@ -76,11 +93,13 @@ router.post(
         },
       };
 
-      const authToken = jwt.sign(data, jwtSecret, { expiresIn: "1h" });
+      const authToken = jwt.sign(data, jwtSecret, { expiresIn: "5s" });
       res.status(200).json({ success: true, authToken });
     } catch (error) {
       console.error("Server error:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   }
 );

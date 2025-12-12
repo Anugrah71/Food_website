@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:3000",
@@ -28,7 +27,7 @@ const mongoDB = require("./db");
 
   app.use(express.json());
 
-  app.use("/api/admin",require("./Routes/AdminData"))
+  app.use("/api/admin", require("./Routes/AdminData"));
   app.use("/api", require("./Routes/CreateUser"));
   app.use("/api", require("./Routes/DisplayData"));
   app.use("/api", require("./Routes/OrderData"));
