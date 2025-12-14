@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Orders = require("../models/Orders");
+const userAuth = require("../middleware/userAuth")
 
-router.post("/orderData", async (req, res) => {
+
+router.post("/orderData",userAuth, async (req, res) => {
   try {
     const { email, order_data, order_date } = req.body;
 
@@ -36,7 +38,7 @@ router.post("/orderData", async (req, res) => {
     res.status(500).json({ error: "Server Error", message: err.message });
   }
 });
-router.post("/MyOrderData", async (req, res) => {
+router.post("/MyOrderData",userAuth, async (req, res) => {
   try {
     let myData = await Orders.findOne({ email: req.body.email });
     res.json({ orderData: myData });

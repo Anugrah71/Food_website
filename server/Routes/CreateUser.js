@@ -6,7 +6,18 @@ require("dotenv").config();
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const jwtSecret = process.env.JWT_SECRET;
+
+const setRefreshTokenCookie = (res, refreshToken) => {
+  res.cookie("refreshToken", refreshToken),
+    {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "strict",
+    };
+};
 router.post(
   "/createuser",
   [
@@ -35,16 +46,27 @@ router.post(
         location: req.body.location,
         role: req.body.role || "user",
       });
-      const data = {
-        user: {
-          id: newUser.id,
-        },
+
+      const accessTokenPayload = {
+        user: { id: newUser.id, role: newUser.role || "user" },
       };
-      const authToken = jwt.sign(data, jwtSecret, { expiresIn: "1h" });
+      const accessToken = jwt.sign(accessTokenPayload, jwtSecret, {
+        expiresIn: "15m",
+      });
+
+      const refreshToken = crypto.randomBytes(32).toString("hex");
+      const refreshTokenHash = crypto
+        .createHash("sha256")
+        .update(refreshToken)
+        .digest("hex");
+
+      await User.findByIdAndUpdate(newUser._id, { refreshTokenHash });
+      setRefreshTokenCookie(res, refreshToken);
+
       res.json({
         success: true,
         message: "User created successfully",
-        authToken,
+        accessToken,
       });
     } catch (error) {
       console.error(error.message);
@@ -87,14 +109,24 @@ router.post(
           .json({ success: false, error: "Invalid credentials" });
       }
 
-      const data = {
-        user: {
-          id: userData.id,
-        },
+      const accessTokenPayload = {
+        user: { id: newUser.id, role: newUser.role || "user" },
       };
+      const accessToken = jwt.sign(accessTokenPayload, jwtSecret, {
+        expiresIn: "15m",
+      });
 
-      const authToken = jwt.sign(data, jwtSecret, { expiresIn: "5s" });
-      res.status(200).json({ success: true, authToken });
+      const refreshToken = crypto.randomBytes(32).toString("hex");
+      const refreshTokenHash = crypto
+        .createHash("sha256")
+        .update(refreshToken)
+        .digest("hex");
+
+      await User.findByIdAndUpdate(newUser._id, { refreshTokenHash });
+      setRefreshTokenCookie(res, refreshToken);
+
+      res.status(200).json({ success: true, accessToken });
+      console.log("Authtoken", accessToken);
     } catch (error) {
       console.error("Server error:", error);
       res

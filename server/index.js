@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const cookieParser = require('cookie-parser');
+const mongoDB = require("./db");
+
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:3000",
@@ -9,7 +12,6 @@ const allowedOrigins = [
   "http://192.168.1.3:5173",
 ];
 
-const mongoDB = require("./db");
 (async () => {
   await mongoDB();
 
@@ -18,6 +20,7 @@ const mongoDB = require("./db");
       origin: allowedOrigins,
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
     })
   );
 
@@ -26,6 +29,7 @@ const mongoDB = require("./db");
   });
 
   app.use(express.json());
+  app.use(cookieParser())
 
   app.use("/api/admin", require("./Routes/AdminData"));
   app.use("/api", require("./Routes/CreateUser"));
