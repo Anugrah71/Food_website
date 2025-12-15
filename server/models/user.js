@@ -24,11 +24,10 @@ const UserSchema = new Schema({
     default: Date.now,
   },
   role: {
-    type: String,
-    enum: ["user", "admin"],
-    default:[ "user"],
+    type: [String],
+    enum: ["user", "admin", "super_admin"],
+    default: ["user"],
   },
- 
 });
 
 module.exports = mongoose.model("user", UserSchema);
