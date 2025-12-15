@@ -4,6 +4,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const mongoDB = require("./db");
 
+
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:3000",
@@ -32,7 +33,8 @@ const allowedOrigins = [
   app.use(cookieParser())
 
   app.use("/api/admin", require("./Routes/AdminData"));
-  app.use("/api", require("./Routes/CreateUser"));
+  app.use("/api", require("./Routes/Auth"));
+  app.use("/api/refreshToken", require("./routes/refreshToken"));
   app.use("/api", require("./Routes/DisplayData"));
   app.use("/api", require("./Routes/OrderData"));
 
