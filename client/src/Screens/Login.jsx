@@ -11,7 +11,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const backendURL = import.meta.env.VITE_BACKEND_URL;
-    const response = await fetch(`${backendURL}/api/loginusers`, {
+    const response = await fetch(`${backendURL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

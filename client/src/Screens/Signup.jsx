@@ -15,7 +15,7 @@ export default function Signup() {
     e.preventDefault();
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
-    const response = await fetch(`${backendURL}/api/createuser`, {
+    const response = await fetch(`${backendURL}/api/signup `, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
