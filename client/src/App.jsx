@@ -5,11 +5,13 @@ import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import MyOrders from "./Screens/MyOrders";
 import { CartProvider } from "./context/ContextReducer";
+import { AuthProvider } from "./context/AuthContext";
 // import "bootstrap/dist/css/bootstrap.min.css"; // <-- Removed
 // import "./styles/App.css"; // <-- Removed
 
 function App() {
   return (
+    <AuthProvider>
     <CartProvider>
       <Router>
         <div className="flex min-h-screen flex-col bg-[#f9f7f3] font-sans">
@@ -22,6 +24,7 @@ function App() {
         </div>
       </Router>
     </CartProvider>
+    </AuthProvider>
   );
 }
 

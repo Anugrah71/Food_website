@@ -3,15 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 import { useCart } from "../context/ContextReducer";
 import Cart from "../Screens/Cart";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { accessToken ,clearDetails} = useAuth();
   const data = useCart();
   const [cart, setCart] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const Logout = () => {
-    localStorage.removeItem("authToken");
+    clearDetails();
     navigate("/login");
   };
 
@@ -36,7 +38,7 @@ export default function Navbar() {
               Home
             </Link>
 
-            {localStorage.getItem("authToken") && (
+            {accessToken && (
               <Link
                 to="/myOrders"
                 className="text-[16px] hover:text-purple-200"
@@ -48,7 +50,7 @@ export default function Navbar() {
 
           {/* ACTION BUTTONS */}
           <div className="flex items-center gap-4">
-            {!localStorage.getItem("authToken") ? (
+            {!accessToken ? (
               <>
                 <Link
                   to="/login"
@@ -108,7 +110,7 @@ export default function Navbar() {
             Home
           </Link>
 
-          {localStorage.getItem("authToken") && (
+          {accessToken && (
             <Link
               to="/myOrders"
               className="text-[18px] hover:text-purple-200"
@@ -118,7 +120,7 @@ export default function Navbar() {
             </Link>
           )}
 
-          {!localStorage.getItem("authToken") ? (
+          {!accessToken ? (
             <>
               <Link
                 to="/login"

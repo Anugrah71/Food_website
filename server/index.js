@@ -33,7 +33,7 @@ const allowedOrigins = [
   app.use(cookieParser())
 
   app.use("/api/admin", require("./Routes/AdminData"));
-  app.use("/api", require("./Routes/Auth"));
+  app.use("/api", require("./Routes/authRoutes"));
   app.use("/api/refreshToken", require("./routes/refreshToken"));
   app.use("/api", require("./Routes/DisplayData"));
   app.use("/api", require("./Routes/OrderData"));

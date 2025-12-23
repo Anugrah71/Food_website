@@ -22,29 +22,36 @@ const setRefreshTokenCookie = (res, refreshToken) => {
 router.post("/signup", async (req, res) => {
   try {
     const { error } = signUpBodyValidation(req.body);
-    if (error)
-      return res.status(400).json({ errors: true, message: error.details[0] });
+    if (error){
+      console.log("Here is the problme" ,error)
 
+      return res.status(400).json({ errors: true, message: error.details[0] });
+    }
     const user = await User.findOne({ email: req.body.email });
-    if (user)
+    if (user){
+      console.log("User exist")
       return res
         .status(400)
         .json({ error: true, message: "User with given email already exis" });
+    }
     const salt = await bcrypt.genSalt(10);
     const hassPassword = await bcrypt.hash(req.body.password, salt);
 
-    await new User({
+    const NewUser = await new User({
       name: req.body.name,
       password: hassPassword,
       email: req.body.email,
       location: req.body.location,
       role: ["user"],
     }).save();
+    const { accessToken, refreshToken } = await generateTokens(NewUser);
+        setRefreshTokenCookie(res, refreshToken);
+
 
     res.status(201).json({
       error: false,
       message: "Account created successfully",
-      // accessToken,
+      accessToken,
     });
   } catch (error) {
     console.error("Signup error:", error);

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+  const {setDetails} = useAuth();
   const [credentials, setcredentials] = useState({
     email: "",
     password: "",
@@ -14,6 +16,7 @@ export default function Login() {
     const response = await fetch(`${backendURL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         email: credentials.email,
         password: credentials.password,
@@ -22,12 +25,13 @@ export default function Login() {
 
     const json = await response.json();
 
-    if (!json.success) {
+    if (json.error) {
       alert("Enter valid credentials");
     }
-    if (json.success) {
-      localStorage.setItem("authToken", json.authToken);
-      localStorage.setItem("userEmail", credentials.email);
+    else{
+      setDetails(json.accessToken,credentials.email)
+      // localStorage.setItem("accessToken", json.accessToken);
+      // localStorage.setItem("userEmail", credentials.email);
       Navigate("/");
     }
   };
