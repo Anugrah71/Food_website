@@ -13,16 +13,17 @@ const userAuth = async (req, res, next) => {
   }
 
   const token = authHeader.replace("Bearer ", "");
+  console.log("Token:",token)
 
   try {
     const decode = jwt.verify(token, accessTokenSecret);
-    const userId = decode._id;
-    const user = await User.findById(userId).select("role");
+    const user = decode.role;
+
     if (!user) {
         return res.status(401).send({ error: "User not found." });
     }
     console.log("role", user);
-    if (!user.role.includes("user")) {
+    if (!user.includes("user")) {
       return res
         .status(403)
         .send({ error: "Forbidden. User privileges required." });

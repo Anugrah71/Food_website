@@ -6,6 +6,7 @@ import Signup from "./Screens/Signup";
 import MyOrders from "./Screens/MyOrders";
 import { CartProvider } from "./context/ContextReducer";
 import { AuthProvider } from "./context/AuthContext";
+import AdminLogin from "./admin/pages/AdminLogin";
 // import "bootstrap/dist/css/bootstrap.min.css"; // <-- Removed
 // import "./styles/App.css"; // <-- Removed
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/createuser" element={<Signup />} />
+            <Route path="/admin" element={<AdminLogin />} />
             <Route path="/myOrders" element={<MyOrders />} />
           </Routes>
         </div>

@@ -42,7 +42,7 @@ router.post("/signup", async (req, res) => {
       password: hassPassword,
       email: req.body.email,
       location: req.body.location,
-      role: ["user"],
+      role: req.body.role,
     }).save();
     const { accessToken, refreshToken } = await generateTokens(NewUser);
         setRefreshTokenCookie(res, refreshToken);

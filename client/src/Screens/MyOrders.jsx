@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { useAuth } from "../context/AuthContext";
 
 export default function MyOrder() {
   const [orderData, setOrderData] = useState({});
+  const { accessToken } = useAuth();
 
   const fetchMyOrder = async () => {
     try {
       const backendURL = import.meta.env.VITE_BACKEND_URL;
       const response = await fetch(`${backendURL}/api/MyOrderData`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
         body: JSON.stringify({
           email: localStorage.getItem("userEmail"),
         }),
