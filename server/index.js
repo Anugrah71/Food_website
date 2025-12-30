@@ -1,9 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const mongoDB = require("./db");
-
 
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
@@ -24,17 +23,16 @@ const allowedOrigins = [
       credentials: true,
     })
   );
+  app.use(express.json());
+  app.use(cookieParser());
 
   app.get("/", (req, res) => {
     res.send("Hello World!");
   });
 
-  app.use(express.json());
-  app.use(cookieParser())
-
   app.use("/api/admin", require("./Routes/AdminData"));
   app.use("/api", require("./Routes/authRoutes"));
-  app.use("/api/refreshToken", require("./routes/refreshToken"));
+  app.use("/api/refresh", require("./Routes/refreshToken"));
   app.use("/api", require("./Routes/DisplayData"));
   app.use("/api", require("./Routes/OrderData"));
 

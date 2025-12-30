@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import api from "../api/axios";
 
 export default function Signup() {
   const { setDetails } = useAuth();
@@ -18,33 +19,17 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
     try {
-      console.log("here", credentials.password);
-      const response = await fetch(`${backendURL}/api/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          role: credentials.role,
-          location: credentials.geolocation,
-        }),
+      const res = await api.post("/api/signup", {
+        name: credentials.name,
+        email: credentials.email,
+        password: credentials.password,
+        role: credentials.role,
+        location: credentials.geolocation,
       });
 
-      const json = await response.json();
-
-      if (json.error) {
-        alert("Enter valid credentials");
-      } else {
-        // console.log(">>>>>>>", json.accessToken);
-        setDetails(json.accessToken, credentials.email);
-        // localStorage.setItem("accessToken", json.accessToken);
-        // localStorage.setItem("userEmail", credentials.email);
-        navigate("/");
-      }
+      setDetails(res.data.accessToken, credentials.email);
+      navigate("/");
     } catch (err) {
       console.error("Signup failed:", err);
       alert("Something went wrong. Please try again later.");

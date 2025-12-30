@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 export default function MyOrder() {
   const [orderData, setOrderData] = useState({});
+  const { accessToken } = useAuth();
 
   const fetchMyOrder = async () => {
     try {
-      const backendURL = import.meta.env.VITE_BACKEND_URL;
-      const response = await fetch(`${backendURL}/api/MyOrderData`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: localStorage.getItem("userEmail"),
-        }),
-      });
-
-      const json = await response.json();
-      setOrderData(json);
+      const res = await api.post("/api/MyOrderData");
+      console.log("Fetch", res.data);
+      setOrderData(res.data);
     } catch (error) {
       console.error("Error fetching order data:", error);
     }
   };
 
   useEffect(() => {
+    if (!accessToken) return;
     fetchMyOrder();
-  }, []);
+  }, [accessToken]);
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">

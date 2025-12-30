@@ -20,7 +20,7 @@ const adminAuth = async (req, res, next) => {
     const userId = decoded.user.id;
 
     const user = await User.findById(userId).select("role");
-    console.log("role", user)
+    // console.log("role", user)
     if (user.role !== "admin") {
       return res
         .status(403)
