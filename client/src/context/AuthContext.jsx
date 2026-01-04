@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
 
-console.log("accesstoekn",accessToken)
-console.log("userEmail",userEmail)
+// console.log("accesstoekn",accessToken)
+// console.log("userEmail",userEmail)
 
 useEffect(() => {
   const restoreSession = async () => {
