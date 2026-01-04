@@ -6,10 +6,10 @@ const mongoDB = require("./db");
 
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:5173",
+//  "http://localhost:3000",
+ // "http://localhost:5173",
   "https://food-website-1-ck7j.onrender.com",
-  "http://192.168.1.3:5173",
+//  "http://192.168.1.3:5173",
 ];
 
 (async () => {
