@@ -1,3 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  /* FIXED: Changed 'l' to '1' in the yellow hex code */
+  --color-brand-yellow: #fdbe15; 
+  --color-brand-green: #40b543;
+  --color-brand-black: #1a1a1a;
+  --color-brand-dark: #333333;
+  --color-brand-grey: #707070;
+  --color-brand-red: #e53935;
+  
+  --font-brand: "Inter", sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -19,3 +33,6 @@ code {
   
 
 }
+
+
+

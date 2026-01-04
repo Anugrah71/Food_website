@@ -1,48 +1,54 @@
 const express = require("express");
 const router = express.Router();
 const Orders = require("../models/Orders");
+const userAuth = require("../middleware/userAuth");
 
-router.post("/orderData", async (req, res) => {
+// ✅ PLACE ORDER
+router.post("/orderData", userAuth, async (req, res) => {
   try {
-    const { email, order_data, order_date } = req.body;
+    const { order_data, order_date } = req.body;
+    const email = req.user.email; 
+    console.log("email " , email)
 
-    if (!email || !order_data || !order_date) {
+    if (!order_data || !order_date) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
     let data = [...order_data];
     data.unshift({ Order_date: order_date });
 
-    let eId = await Orders.findOne({ email });
-    
+    const existingOrder = await Orders.findOne({ email });
 
-    if (eId === null) {
+    if (!existingOrder) {
       await Orders.create({
         email,
         order_data: [data],
       });
-
-      res.status(200).json({ message: "Order Placed" });
     } else {
       await Orders.findOneAndUpdate(
         { email },
         { $push: { order_data: data } }
       );
-
-      res.status(200).json({ message: "Order Placed" });
     }
+
+    res.status(200).json({ message: "Order Placed" });
   } catch (err) {
     console.error("Server error:", err);
-    res.status(500).json({ error: "Server Error", message: err.message });
+    res.status(500).json({ error: "Server Error" });
   }
 });
-router.post("/MyOrderData", async (req, res) => {
+
+router.post("/MyOrderData", userAuth, async (req, res) => {
   try {
-    let myData = await Orders.findOne({ email: req.body.email });
+    const email = req.user.email; 
+    // console.log("email id >>>>>>>>>>>> ", email)
+
+    const myData = await Orders.findOne({ email });
+    // console.log("MyData>>>",myData)
     res.json({ orderData: myData });
   } catch (err) {
     console.error("Server error:", err);
-    res.status(500).json({ error: "Server Error", message: err.message });
+    res.status(500).json({ error: "Server Error" });
   }
 });
 

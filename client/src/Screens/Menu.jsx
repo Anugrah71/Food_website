@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Category from "../components/Category";
+import api from "../api/axios";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -15,10 +16,9 @@ const carouselImages = [
   "/images/Img1.png",
   "/images/Img2.png",
   "/images/Img3.png",
-  "/images/Img4.jpg",
 ];
 
-export default function Home() {
+export default function Menu() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItems, setFoodItems] = useState([]);
   const [search, setSearch] = useState("");
@@ -31,34 +31,24 @@ export default function Home() {
   const loadData = async () => {
     setLoading(true);
     setError(null);
-    const controller = new AbortController();
-    const signal = controller.signal;
 
     try {
-      const res = await fetch(`${backendURL}/api/foodData`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal,
-      });
+      const res = await api.post("/api/foodData");
 
-      if (!res.ok) throw new Error(`Server responded with ${res.status}`);
-
-      const data = await res.json();
+      const data = res.data;
       if (!Array.isArray(data) || data.length < 2)
-        throw new Error("Unexpected data format from server");
+        throw new Error("Unexpected data format");
 
       setFoodItems(data[0] || []);
       setFoodCat(data[1] || []);
     } catch (err) {
-      if (err.name !== "AbortError") {
-        console.error("Failed to load:", err);
-        setError(err.message || "Failed to fetch data");
-      }
+      console.error("Failed to load:", err);
+      setError(
+        err.response?.data?.message || err.message || "Failed to fetch data",
+      );
     } finally {
       setLoading(false);
     }
-
-    return () => controller.abort();
   };
 
   useEffect(() => {
@@ -98,24 +88,26 @@ export default function Home() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search for food..."
-          className="h-14 w-[85%] rounded-full bg-white px-6 text-lg text-gray-800 shadow-md outline-none placeholder-gray-500"
+          className="h-14 w-[85%] rounded-full bg-white px-6 text-lg text-gray-800 placeholder-gray-500 shadow-md outline-none"
         />
       </div>
 
       <div className="mx-auto w-full max-w-6xl px-4">
         {loading && (
-          <div className="flex flex-col items-center my-5">
-            <div className="animate-spin w-10 h-10 border-4 border-purple-300 border-t-purple-600 rounded-full"></div>
-            <small className="text-gray-600 mt-3">Fetching fresh items...</small>
+          <div className="my-5 flex flex-col items-center">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-purple-300 border-t-purple-600"></div>
+            <small className="mt-3 text-gray-600">
+              Fetching fresh items...
+            </small>
           </div>
         )}
 
         {!loading && error && (
-          <div className="bg-red-500 text-white p-4 rounded-md flex justify-between items-center">
+          <div className="flex items-center justify-between rounded-md bg-red-500 p-4 text-white">
             <span>{error}</span>
             <button
               onClick={loadData}
-              className="border border-white px-3 py-1 rounded-md text-sm"
+              className="rounded-md border border-white px-3 py-1 text-sm"
             >
               Retry
             </button>
@@ -126,12 +118,12 @@ export default function Home() {
           <>
             {selectedCategory && (
               <div className="mt-6">
-                <div className="text-2xl font-semibold text-gray-800 mb-2">
+                <div className="mb-2 text-2xl font-semibold text-gray-800">
                   {selectedCategory}
                 </div>
-                <hr className="border-gray-300 mb-4" />
+                <hr className="mb-4 border-gray-300" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {foodItems
                     .filter(
                       (item) =>
@@ -163,12 +155,12 @@ export default function Home() {
 
                 return (
                   <div key={data._id} className="mt-8">
-                    <div className="text-2xl font-semibold text-gray-800 mb-2">
+                    <div className="mb-2 text-2xl font-semibold text-gray-800">
                       {data.CategoryName}
                     </div>
-                    <hr className="border-gray-300 mb-4" />
+                    <hr className="mb-4 border-gray-300" />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                       {filteredItems.map((item) => (
                         <Card
                           key={item._id}

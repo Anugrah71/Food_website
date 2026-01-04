@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import api from "../api/axios";
 
 export default function Signup() {
+  const { setDetails } = useAuth();
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
     password: "",
+    role: "admin",
     geolocation: "",
   });
 
@@ -14,26 +19,20 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
-    const response = await fetch(`${backendURL}/api/createuser`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    try {
+      const res = await api.post("/api/signup", {
         name: credentials.name,
         email: credentials.email,
         password: credentials.password,
+        role: credentials.role,
         location: credentials.geolocation,
-      }),
-    });
+      });
 
-    const json = await response.json();
-
-    if (!json.success) {
-      alert("Enter valid credentials");
-    } else {
-      localStorage.setItem("authToken", json.authToken);
-      localStorage.setItem("userEmail", credentials.email);
+      setDetails(res.data.accessToken, credentials.email);
       navigate("/");
+    } catch (err) {
+      console.error("Signup failed:", err);
+      alert("Something went wrong. Please try again later.");
     }
   };
 
@@ -50,9 +49,7 @@ export default function Signup() {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="mb-2 block font-medium text-gray-700">
-              Name
-            </label>
+            <label className="mb-2 block font-medium text-gray-700">Name</label>
             <input
               type="text"
               name="name"
