@@ -1,6 +1,7 @@
 import React from "react";
 import Delete from "@mui/icons-material/Delete";
 import { useCart, useDispatchCart } from "../context/ContextReducer";
+import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
 
 export default function Cart() {

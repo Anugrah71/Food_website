@@ -3,7 +3,7 @@ const router = express.Router();
 const Orders = require("../models/Orders");
 const userAuth = require("../middleware/userAuth");
 
-// ✅ PLACE ORDER
+//  PLACE ORDER
 router.post("/orderData", userAuth, async (req, res) => {
   try {
     const { order_data, order_date } = req.body;
