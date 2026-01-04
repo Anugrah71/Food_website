@@ -4,6 +4,8 @@ import { useCart, useDispatchCart } from "../context/ContextReducer";
 import api from "../api/axios";
 
 export default function Cart() {
+  const { accessToken } = useAuth();
+
   let data = useCart();
   let dispatch = useDispatchCart();
 

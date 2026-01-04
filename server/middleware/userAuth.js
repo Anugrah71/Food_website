@@ -13,6 +13,7 @@ const userAuth = (req, res, next) => {
   }
 
   const token = authHeader.replace("Bearer ", "");
+  console.log("Token:",token)
 
   try {
     const decoded = jwt.verify(token, accessTokenSecret);
