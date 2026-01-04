@@ -16,7 +16,7 @@ const setRefreshTokenCookie = (res, refreshToken) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    sameSite: "strict",
+    sameSite: "none",
   });
 };
 router.post("/signup", async (req, res) => {
