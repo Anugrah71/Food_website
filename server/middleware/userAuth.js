@@ -13,13 +13,13 @@ const userAuth = (req, res, next) => {
   }
 
   const token = authHeader.replace("Bearer ", "");
-  console.log("Token:",token)
+  // console.log("Token:",token)
 
   try {
     const decoded = jwt.verify(token, accessTokenSecret);
     req.user = decoded;
     const roles = Array.isArray(decoded.role) ? decoded.role : [decoded.role];
-    console.log("ROle", roles);
+    // console.log("ROle", roles);
 
     if (!roles.includes("user")) {
       return res.status(403).json({
