@@ -1,6 +1,8 @@
 import { useState, useContext, createContext, useEffect } from "react";
 import { setupInterceptors } from "../api/setupInterceptors";
 import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
+
 
 
 const AuthContext = createContext();
