@@ -8,7 +8,7 @@ router.post("/orderData", userAuth, async (req, res) => {
   try {
     const { order_data, order_date } = req.body;
     const email = req.user.email; 
-    console.log("email " , email)
+    // console.log("email ", email)
 
     if (!order_data || !order_date) {
       return res.status(400).json({ error: "Missing required fields" });
