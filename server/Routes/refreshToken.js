@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 
   verifyRefreshToken(refreshToken)
     .then(({ tokenDetails }) => {
-      console.log("EmailId", tokenDetails.email);
+      // console.log("EmailId", tokenDetails.email);
       const payload = {
         _id: tokenDetails._id,
         role: tokenDetails.role,
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
       const newAccessToken = jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_PRIVATE_KEY,
-        { expiresIn: "5m" }
+        { expiresIn: "15m" }
       );
 
       res.status(200).json({

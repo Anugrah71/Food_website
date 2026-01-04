@@ -41,10 +41,10 @@ router.post("/orderData", userAuth, async (req, res) => {
 router.post("/MyOrderData", userAuth, async (req, res) => {
   try {
     const email = req.user.email; 
-    console.log("email id >>>>>>>>>>>> ", email)
+    // console.log("email id >>>>>>>>>>>> ", email)
 
     const myData = await Orders.findOne({ email });
-    console.log("MyData>>>",myData)
+    // console.log("MyData>>>",myData)
     res.json({ orderData: myData });
   } catch (err) {
     console.error("Server error:", err);
