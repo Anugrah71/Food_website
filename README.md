@@ -137,12 +137,12 @@ Admin
 
 <p align="center">
   <img src="Screenshort/Food1.png" width="45%" />
-  <img src="Screenshot/Food2.png" width="45%" />
+  <img src="Screenshort/Food2.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="Screenshot/Food4.png" width="45%" />
-  <img src="Screenshot/Food5.png" width="45%" />
+  <img src="Screenshort/Food4.png" width="45%" />
+  <img src="Screenshort/Food5.png" width="45%" />
 </p
 ---
 ## Future Improvements
@@ -150,4 +150,9 @@ Admin
 - Online payment integration (Stripe / Razorpay)
 - Real-time order status tracking
 
+## Future Improvements
+
+- Role-based access control for admin dashboard
+- Online payment integration (Stripe / Razorpay)
+- Real-time order status tracking
 
