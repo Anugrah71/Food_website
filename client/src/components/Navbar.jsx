@@ -66,9 +66,9 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6">
-          <button className="hidden rounded-md bg-white px-6 py-3 text-sm font-bold tracking-wider text-[#5e3f9c] hover:bg-purple-50 md:block uppercase shadow-md active:scale-95 transition-all">
+          <Link to="/" className="hidden rounded-md bg-white px-6 py-3 text-sm font-bold tracking-wider text-[#5e3f9c] hover:bg-purple-50 md:block uppercase shadow-md active:scale-95 transition-all">
             Order Now
-          </button>
+          </Link>
 
           <div
             className="relative cursor-pointer group"

@@ -25,7 +25,6 @@ export default function MyOrder() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
-      <Navbar />
 
       <div className="mx-auto my-10 w-full max-w-6xl flex-grow px-4">
         {orderData.orderData && orderData.orderData.order_data ? (
@@ -89,7 +88,6 @@ export default function MyOrder() {
         )}
       </div>
 
-      <Footer />
     </div>
   );
 }

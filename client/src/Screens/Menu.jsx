@@ -61,7 +61,6 @@ export default function Menu() {
 
   return (
     <div className="w-full bg-gray-50">
-      <Navbar />
 
       <div className="relative h-[380px] w-full sm:h-[450px] md:h-[520px]">
         <Swiper
@@ -176,7 +175,6 @@ export default function Menu() {
         )}
       </div>
 
-      <Footer />
     </div>
   );
 }
