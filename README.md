@@ -136,16 +136,17 @@ Admin
 - Live Demo : https://food-website-1-ck7j.onrender.com
 
 <p align="center">
-  <img src="screenshots/Food1.png" width="45%" />
-  <img src="screenshots/Food2.png" width="45%" />
+  <img src="Screenshots/Food1.png" width="45%" />
+  <img src="Screenshots/Food2.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="screenshots/Food4.png" width="45%" />
-  <img src="screenshots/Food5.png" width="45%" />
+  <img src="Screenshots/Food4.png" width="45%" />
+  <img src="Screenshots/Food5.png" width="45%" />
 </p
 ---
 ## Future Improvements
 - Role-based access control for admin dashboard
 - Online payment integration (Stripe / Razorpay)
 - Real-time order status tracking
+
