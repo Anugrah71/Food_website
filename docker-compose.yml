@@ -1,6 +1,6 @@
 services:
   server:
-    build: ./server
+    image: anugrahkariyatt/food-website-server:v1.0
     ports:
       - "5000:5000"
     environment:
@@ -10,11 +10,11 @@ services:
       - ./server:/app
       - /app/node_modules
   client:
-    build: ./client
+    image: anugrahkariyatt/food-website-client:v1.0
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL={VITE_API_URL}
+      - VITE_API_URL=http://localhost:5000
     volumes:
       - ./client:/app
       - /app/node_modules
