@@ -1,4 +1,4 @@
-# Soulful Meals – MERN Stack Food Ordering Web App
+# Soulful Meals – Dockerized MERN Stack Food Ordering Web App
 
 A responsive full-stack food ordering application built using the MERN stack, modernized with Tailwind CSS v4, Vite, and an optimized backend architecture.
 
@@ -64,6 +64,9 @@ Users looking for a fast, responsive interface to order meals and track order hi
 - Multer (file uploads)
 - cookie-parser
 
+### DevOps
+- Docker
+- Docker Compose
 ---
 
 ## Folder Structure
@@ -73,49 +76,82 @@ root/
 └── server/ # Node.js / Express backend (API & database
 ```
 ---
+## Database Setup (MongoDB Atlas)
+This project uses static seed data located in `server/data`.
 
-## Installation & Setup
+### Step 1: Create a MongoDB Atlas Cluster
+- Visit: https://www.mongodb.com/cloud/atlas
+- Create a **Free Tier** cluster
+
+### Step 2: Initialize Database
+
+Create a database:
+
+Create these collections:
+```bash
+| Collection Name | Source File |
+|-----------------|------------|
+| food_items      | server/data/FoodData.json |
+| food_category   | server/data/DataCategory.json |
+
+Import the JSON files using MongoDB Compass or Atlas UI.
+```
+### Step 3: Get Connection String
+Example:
+```bash
+mongodb+srv://<user>:<password>@cluster.mongodb.net/soulful_meals
+```
+---
+
+## Installation & Setup (Dockerized)
 
 ### Clone the repository
 ```bash
 git clone https://github.com/Anugrah71/Food_website
 cd Food_website
 ```
-Setup frontend
-```bash
-cd client
-npm install
-```
-
-Setup backend
-```bash
-cd ../server
-npm install
-```
 ### Environment Variables
 
 Create a `.env` file inside the client/ directory:
-```bash
+```env
 VITE_BACKEND_URL= http://localhost:500 you backend host url
-ACCESS_TOKEN_PRIVATE_KEY = "YOUR_LONG_RANDOM_STRING_FOR_ACCESS"
-REFRESH_TOKEN_PRIVATE_KEY = "YOUR_EVEN_LONGER_RANDOM_STRING_FOR_REFRESH"
 ```
 Create a `.env` file inside the server/ directory:
-```bash
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
+```env
+ACCESS_TOKEN_PRIVATE_KEY=YOUR_LONG_RANDOM_STRING_FOR_ACCESS
+REFRESH_TOKEN_PRIVATE_KEY=YOUR_EVEN_LONGER_RANDOM_STRING_FOR_REFRESH
+
+NODE_ENV=production
 PORT=5000
+
+MONGODB_URI=your_mongodb_connection_string
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret00
+```
+Root (.env) – Used by Docker Compose
+```env
+MONGODB_URI=your_mongodb_connection_string
 ```
 ### Run the Project
-Start backend
+Build and start all services:
+
 ```bash
-cd server
-npm start
+docker-compose up --build
 ```
-Start frontend
+## Access the App
+Frontend 
+```bash 
+http://localhost:5173
+```
+Backend
 ```bash
-cd client
-npm run dev
+http://localhost:5000
+```
+### Stop containers
+```bash
+docker-compose down
 ```
 ---
 ## API Endpoints
@@ -155,4 +191,5 @@ Admin
 - Role-based access control for admin dashboard
 - Online payment integration (Stripe / Razorpay)
 - Real-time order status tracking
+
 
