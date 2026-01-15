@@ -1,0 +1,63 @@
+[{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9da"
+  },
+  "CategoryName": "Starter",
+  "Sticker": "🍲"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9d8"
+  },
+  "CategoryName": "Main Course",
+  "Sticker": "🍽️"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9dc"
+  },
+  "CategoryName": "Pizza",
+  "Sticker": "🍕"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9dd"
+  },
+  "CategoryName": "Salads",
+  "Sticker": "🥗"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9de"
+  },
+  "CategoryName": "Beverages",
+  "Sticker": "🥤"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9e0"
+  },
+  "CategoryName": "Desserts",
+  "Sticker": "🍰"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9db"
+  },
+  "CategoryName": "Biryani/Rice",
+  "Sticker": "🍛"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9df"
+  },
+  "CategoryName": "Soups",
+  "Sticker": "🍜"
+},
+{
+  "_id": {
+    "$oid": "680c81d4fd689ec2f38bc9d9"
+  },
+  "CategoryName": "Snacks",
+  "Sticker": "🍟"
+}]
