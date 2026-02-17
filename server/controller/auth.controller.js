@@ -7,7 +7,6 @@ const {
 } = require("../utils/validationSchema");
 
 const bcrypt = require("bcryptjs");
-const jwtSecret = process.env.JWT_SECRET;
 
 const setRefreshTokenCookie = (res, refreshToken) => {
   res.cookie("refreshToken", refreshToken, {
