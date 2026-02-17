@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import UserTokenModel from "../models/UserToken.js";
+import UserTokenModel from "../models/userToken.model.js";
 import "dotenv/config";
 const generateTokens = async (user) => {
   try {
@@ -12,12 +12,12 @@ const generateTokens = async (user) => {
     const accessToken = jwt.sign(
       payload,
       process.env.ACCESS_TOKEN_PRIVATE_KEY,
-      { expiresIn: "15m" }
+      { expiresIn: "15m" },
     );
     const refreshToken = jwt.sign(
       payload,
       process.env.REFRESH_TOKEN_PRIVATE_KEY,
-      { expiresIn: "15d" }
+      { expiresIn: "15d" },
     );
     const UserTokenRecord = await UserTokenModel.findOne({
       userId: userObject._id,

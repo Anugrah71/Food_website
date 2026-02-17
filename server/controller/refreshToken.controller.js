@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const UserToken = require("../models/UserToken");
+const UserToken = require("../models/userToken.model");
 const verifyRefreshToken = require("../utils/verifyRefreshToken").default;
 require("dotenv").config();
 

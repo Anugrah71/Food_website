@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const User = require("../models/user.model");
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -12,8 +12,8 @@ const adminAuth = async (req, res, next) => {
     });
   }
   const token = authHeader.replace("Bearer ", "");
-  
-    // console.log("token decode" , jwt.verify(token, jwtSecret))
+
+  // console.log("token decode" , jwt.verify(token, jwtSecret))
 
   try {
     const decoded = jwt.verify(token, jwtSecret);

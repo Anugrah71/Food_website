@@ -1,4 +1,4 @@
-const Orders = require("../models/Orders");
+const Orders = require("../models/order.model");
 
 //  PLACE ORDER
 exports.createOrder = async (req, res) => {
@@ -45,4 +45,3 @@ exports.fetchOrderedItems = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
-

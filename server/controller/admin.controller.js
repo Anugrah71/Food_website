@@ -1,5 +1,5 @@
 const streamifier = require("streamifier");
-const FoodItem = require("../models/FoodItem");
+const FoodItem = require("../models/foodItem.model");
 const cloudinary = require("../config/cloudinary.config");
 
 exports.addNewFood = async (req, res) => {

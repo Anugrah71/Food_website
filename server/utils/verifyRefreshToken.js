@@ -1,4 +1,4 @@
-import UserTokenModel from "../models/UserToken.js";
+import UserTokenModel from "../models/userToken.model.js";
 import jwt from "jsonwebtoken";
 
 const verifyRefreshToken = (refreshToken) => {
@@ -19,7 +19,6 @@ const verifyRefreshToken = (refreshToken) => {
         error: true,
         message: "Invalid refresh token (Not found in DB)",
       });
-
 
     jwt.verify(refreshToken, privateKey, (err, tokenDetails) => {
       if (err)

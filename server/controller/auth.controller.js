@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/user.model");
 require("dotenv").config();
 const generateTokens = require("../utils/generateTokens").default;
 const {
