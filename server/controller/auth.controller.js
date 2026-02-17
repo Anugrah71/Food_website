@@ -20,14 +20,14 @@ const setRefreshTokenCookie = (res, refreshToken) => {
 exports.registerNewUser = async (req, res) => {
   try {
     const { error } = signUpBodyValidation(req.body);
-    if (error){
-      console.log("Here is the problme" ,error)
+    if (error) {
+      console.log("Here is the problme", error);
 
       return res.status(400).json({ errors: true, message: error.details[0] });
     }
     const user = await User.findOne({ email: req.body.email });
-    if (user){
-      console.log("User exist")
+    if (user) {
+      console.log("User exist");
       return res
         .status(400)
         .json({ error: true, message: "User with given email already exis" });
@@ -43,8 +43,7 @@ exports.registerNewUser = async (req, res) => {
       role: req.body.role,
     }).save();
     const { accessToken, refreshToken } = await generateTokens(NewUser);
-        setRefreshTokenCookie(res, refreshToken);
-
+    setRefreshTokenCookie(res, refreshToken);
 
     res.status(201).json({
       error: false,
@@ -74,7 +73,7 @@ exports.login = async (req, res) => {
     // const userData = await User.findOne({ email });
     const verifiedPassword = await bcrypt.compare(
       req.body.password,
-      user.password
+      user.password,
     );
     if (!verifiedPassword)
       return res
@@ -92,4 +91,3 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 };
-

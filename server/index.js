@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
-const mongoDB = require("./db");
+const mongoDB = require("./config/mongo.config");
 
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
