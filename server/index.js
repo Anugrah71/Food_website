@@ -30,11 +30,11 @@ const allowedOrigins = [
     res.send("Hello World!");
   });
 
-  app.use("/api/admin", require("./Routes/AdminData"));
-  app.use("/api", require("./Routes/authRoutes"));
-  app.use("/api/refresh", require("./Routes/refreshToken"));
-  app.use("/api", require("./Routes/DisplayData"));
-  app.use("/api", require("./Routes/OrderData"));
+  app.use("/api/admin", require("./routes/admin.route"));
+  app.use("/api", require("./routes/auth.route"));
+  app.use("/api/refresh", require("./routes/refreshToken.route"));
+  app.use("/api", require("./routes/menuDisplay.route"));
+  app.use("/api", require("./routes/orders.route"));
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

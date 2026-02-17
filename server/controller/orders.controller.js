@@ -1,13 +1,10 @@
-const express = require("express");
-const router = express.Router();
 const Orders = require("../models/Orders");
-const userAuth = require("../middleware/userAuth");
 
 //  PLACE ORDER
-router.post("/orderData", userAuth, async (req, res) => {
+exports.createOrder = async (req, res) => {
   try {
     const { order_data, order_date } = req.body;
-    const email = req.user.email; 
+    const email = req.user.email;
     // console.log("email ", email)
 
     if (!order_data || !order_date) {
@@ -25,10 +22,7 @@ router.post("/orderData", userAuth, async (req, res) => {
         order_data: [data],
       });
     } else {
-      await Orders.findOneAndUpdate(
-        { email },
-        { $push: { order_data: data } }
-      );
+      await Orders.findOneAndUpdate({ email }, { $push: { order_data: data } });
     }
 
     res.status(200).json({ message: "Order Placed" });
@@ -36,20 +30,19 @@ router.post("/orderData", userAuth, async (req, res) => {
     console.error("Server error:", err);
     res.status(500).json({ error: "Server Error" });
   }
-});
+};
 
-router.post("/MyOrderData", userAuth, async (req, res) => {
+exports.fetchOrderedItems = async (req, res) => {
   try {
-    const email = req.user.email; 
+    const email = req.user.email;
     // console.log("email id >>>>>>>>>>>> ", email)
 
     const myData = await Orders.findOne({ email });
-    // console.log("MyData>>>",myData)
+    // console.log("MyData>>>", myData);
     res.json({ orderData: myData });
   } catch (err) {
     console.error("Server error:", err);
     res.status(500).json({ error: "Server Error" });
   }
-});
+};
 
-module.exports = router;

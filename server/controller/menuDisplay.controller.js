@@ -1,8 +1,6 @@
-const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
 
-router.post("/foodData", async (req, res) => {
+exports.fetchFoodData = async (req, res) => {
   try {
     const foodItems = await mongoose.connection.db
       .collection("newFoodData")
@@ -19,6 +17,5 @@ router.post("/foodData", async (req, res) => {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
   }
-});
+};
 
-module.exports = router;

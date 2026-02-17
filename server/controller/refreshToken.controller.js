@@ -1,11 +1,9 @@
-const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 const UserToken = require("../models/UserToken");
 const verifyRefreshToken = require("../utils/verifyRefreshToken").default;
 require("dotenv").config();
 
-router.post("/", async (req, res) => {
+exports.refreshAccessToken = async (req, res) => {
   console.log("It calling here");
   const refreshToken = req.cookies.refreshToken;
 
@@ -28,7 +26,7 @@ router.post("/", async (req, res) => {
       const newAccessToken = jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_PRIVATE_KEY,
-        { expiresIn: "15m" }
+        { expiresIn: "15m" },
       );
 
       res.status(200).json({
@@ -43,9 +41,9 @@ router.post("/", async (req, res) => {
         message: err.message || "Invalid Refresh Token. Please log in again.",
       });
     });
-});
+};
 
-router.delete("/", async (req, res) => {
+exports.logoutUser = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
 
@@ -74,6 +72,4 @@ router.delete("/", async (req, res) => {
     console.error("Logout error:", err);
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
-});
-
-module.exports = router;
+};

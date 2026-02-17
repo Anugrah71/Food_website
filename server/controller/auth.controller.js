@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const User = require("../models/user");
 require("dotenv").config();
 const generateTokens = require("../utils/generateTokens").default;
@@ -19,7 +17,7 @@ const setRefreshTokenCookie = (res, refreshToken) => {
     sameSite: "none",
   });
 };
-router.post("/signup", async (req, res) => {
+exports.registerNewUser = async (req, res) => {
   try {
     const { error } = signUpBodyValidation(req.body);
     if (error){
@@ -57,9 +55,9 @@ router.post("/signup", async (req, res) => {
     console.error("Signup error:", error);
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
-});
+};
 
-router.post("/login", async (req, res) => {
+exports.login = async (req, res) => {
   try {
     const { error } = logInBodyValidation(req.body);
     if (error) {
@@ -93,6 +91,5 @@ router.post("/login", async (req, res) => {
     console.error("Server error:", error);
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
-});
+};
 
-module.exports = router;
