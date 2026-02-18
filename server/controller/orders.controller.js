@@ -35,7 +35,7 @@ exports.createOrder = async (req, res) => {
 exports.fetchOrderedItems = async (req, res) => {
   try {
     const email = req.user.email;
-    // console.log("email id >>>>>>>>>>>> ", email)
+    console.log("email id >>>>>>>>>>>> ", email)
 
     const myData = await Orders.findOne({ email });
     // console.log("MyData>>>", myData);

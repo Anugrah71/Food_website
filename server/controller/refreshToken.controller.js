@@ -6,6 +6,7 @@ require("dotenv").config();
 exports.refreshAccessToken = async (req, res) => {
   console.log("It calling here");
   const refreshToken = req.cookies.refreshToken;
+  console.log("Token",refreshToken);
 
   if (!refreshToken) {
     return res.status(401).json({
