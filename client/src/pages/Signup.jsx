@@ -38,6 +38,8 @@ export default function Signup() {
   alert("Something went wrong. Please try again later.");
 }
 
+  };
+
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
