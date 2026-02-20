@@ -31,7 +31,7 @@ useEffect(() => {
       () => accessToken,
       (token) => setAccessToken(token),
     );
-  }, []);
+  }, [accessToken]);
 
   const setDetails = (token, email) => {
     setAccessToken(token);

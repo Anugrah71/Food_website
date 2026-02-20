@@ -24,7 +24,7 @@ export const setupInterceptors = (getToken, setToken) => {
   requestInterceptorId = api.interceptors.request.use(config => {
     const token = getToken();
     if (token) {
-      console.log("Token",token)
+      // console.log("Token",token)
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

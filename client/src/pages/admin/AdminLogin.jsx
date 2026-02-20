@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import api from "../api/axios";
+import { useAuth } from "../../context/AuthContext";
 
-
-export default function Login() {
-  const { setDetails } = useAuth();
+export default function AdminLogin() {
+  const {setDetails} = useAuth();
   const [credentials, setcredentials] = useState({
     email: "",
     password: "",
@@ -14,24 +12,29 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await api.post("/api/login", {
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const response = await fetch(`${backendURL}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
         email: credentials.email,
         password: credentials.password,
-      });
+      }),
+    });
 
-      const data = res.data;
-      console.log("error " , data.error)
+    const json = await response.json();
 
-      if (data.error) {
-        alert("Enter valid credentials");
-      } else {
-        setDetails(data.accessToken, credentials.email);
-        Navigate("/");
-      }
-    } catch (err) {
-      console.error("Login failed:", err);
-      alert("Invalid credentials");
+    if (json.error) {
+      alert("Enter valid credentials");
+    }
+    else{
+      // console.log("Tooken",json.accessToken);
+      
+      setDetails(json.accessToken,credentials.email)
+      // localStorage.setItem("accessToken", json.accessToken);
+      // localStorage.setItem("userEmail", credentials.email);
+      Navigate("/");
     }
   };
 
