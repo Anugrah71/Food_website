@@ -30,11 +30,13 @@ export default function Signup() {
 
       setDetails(res.data.accessToken, credentials.email);
       navigate("/");
-    } catch (err) {
-      console.error("Signup failed:", err);
-      alert("Something went wrong. Please try again later.");
-    }
-  };
+   } catch (err) {
+  console.error("Signup failed:", err.message);
+  if (err.response) {
+    console.error("Server response:", err.response.data);
+  }
+  alert("Something went wrong. Please try again later.");
+}
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
