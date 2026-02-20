@@ -6,7 +6,8 @@ router.post("/signup", authController.registerNewUser);
 
 router.post("/login", authController.login);
 
-router.get("/sendRestPassLink", authController.sendRestPassLink);
+router.post("/sendRestPassLink", authController.sendRestPassLink);
 router.patch("/password-reset/:userId/:token", authController.passwordRest);
+router.patch("/change-current-pass", authController.changeCurrentpassword);
 
 module.exports = router;

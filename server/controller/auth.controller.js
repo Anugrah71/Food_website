@@ -30,7 +30,7 @@ exports.registerNewUser = async (req, res) => {
     }
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      console.log("User exist");
+      // console.log("User exist");
       return res
         .status(400)
         .json({ error: true, message: "User with given email already exis" });
@@ -112,7 +112,7 @@ exports.sendRestPassLink = async (req, res) => {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-    const link = `http://localhost:5000/api/password-reset/${user._id}/${token.token}`;
+    const link = `${process.env.CLIENT_URL}/reset-password/${user._id}/${token.token}`;
     await sendEmail(user.email, "Password reset", link);
     res.status(200).json("password reset link sent to your email account");
   } catch (err) {
@@ -145,5 +145,45 @@ exports.passwordRest = async (req, res) => {
   } catch (err) {
     res.send("An error occured");
     console.log(err);
+  }
+};
+
+exports.changeCurrentpassword = async (req, res) => {
+  try {
+    const schema = Joi.object({
+      currentPassword: Joi.string().required(),
+      newPassword: Joi.string().min(8).required(),
+    });
+    const { error } = schema.validate(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    const email = req.body.email;
+    // console.log("email", email);
+    const user = await User.findOne({ email });
+    // console.log("user>>", user);
+    if (!user) {
+      // console.log("Error herer", email);
+      return res.status(400).send("User does not exist");
+    }
+
+    const verifiedPassword = await bcrypt.compare(
+      req.body.oldPassword,
+      user.password,
+    );
+    if (!verifiedPassword) {
+      // console.log("pas");
+      return res
+        .status(401)
+        .json({ error: true, message: "password not match" });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hassPassword = await bcrypt.hash(req.body.password, salt);
+
+    user.password = hassPassword;
+    await user.save();
+    res.status(200).send("password update sucessfully.");
+  } catch (err) {
+    // console.error("error" ,err.message)
+    res.status(500).json("Internal server error");
   }
 };
